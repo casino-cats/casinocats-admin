@@ -4,7 +4,16 @@ import {
   WalletProvider,
 } from "@solana/wallet-adapter-react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import { FakeWalletAdapter } from "@solana/wallet-adapter-wallets";
+import {
+  FakeWalletAdapter,
+  LedgerWalletAdapter,
+  PhantomWalletAdapter,
+  SlopeWalletAdapter,
+  SolflareWalletAdapter,
+  SolletExtensionWalletAdapter,
+  SolletWalletAdapter,
+  TorusWalletAdapter,
+} from "@solana/wallet-adapter-wallets";
 import {
   WalletModalProvider,
   WalletDisconnectButton,
@@ -25,17 +34,15 @@ export const WalletWrapper: FC = () => {
 
   const wallets = useMemo(
     () => [
-      /**
-       * Select the wallets you wish to support, by instantiating wallet adapters here.
-       *
-       * Common adapters can be found in the npm package `@solana/wallet-adapter-wallets`.
-       * That package supports tree shaking and lazy loading -- only the wallets you import
-       * will be compiled into your application, and only the dependencies of wallets that
-       * your users connect to will be loaded.
-       */
-      new FakeWalletAdapter(),
+      new PhantomWalletAdapter(),
+      new SlopeWalletAdapter(),
+      new SolflareWalletAdapter({ network }),
+      new TorusWalletAdapter(),
+      new LedgerWalletAdapter(),
+      new SolletWalletAdapter({ network }),
+      new SolletExtensionWalletAdapter({ network }),
     ],
-    []
+    [network]
   );
 
   return (
