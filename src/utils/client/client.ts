@@ -119,7 +119,17 @@ const createClient = ({
     },
     fetchAllPool: async () => {
       const poolList = await program.account.pool.all();
-      return poolList;
+      return poolList.map((pool) => ({
+        poolName: String.fromCharCode(...pool.account.poolName).replace(
+          /\0/g,
+          ""
+        ),
+        depositStartTs: pool.account.depositStartTs.toNumber(),
+        depositEndTs: pool.account.depositEndTs.toNumber(),
+        stakeEndTs: pool.account.stakeEndTs.toNumber(),
+        numberOfCats: pool.account.numberOfCats,
+        createdAt: pool.account.createdTs.toNumber(),
+      }));
     },
   };
 };

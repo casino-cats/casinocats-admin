@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Header from "../partials/Header";
 import Sidebar from "../partials/Sidebar";
+import { PoolType } from "../utils/client/types/clientType";
+import useClient from "../utils/hooks/useClient";
 
 const Pool = () => {
+  const client = useClient();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [poolList, setPoolList] = useState<PoolType[]>();
+
+  useEffect(() => {
+    const getPoolList = async () => {
+      const pools = await client?.fetchAllPool();
+      setPoolList(pools);
+    };
+    getPoolList();
+  }, [client]);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -36,49 +48,79 @@ const Pool = () => {
           <div className="bg-white shadow-lg rounded-sm border border-gray-200 relative">
             <header className="px-5 py-4">
               <h2 className="font-semibold text-gray-800">
-                All Orders{" "}
-                <span className="text-gray-400 font-medium">442</span>
+                All Pools{" "}
+                <span className="text-gray-400 font-medium">
+                  {poolList?.length}
+                </span>
               </h2>
             </header>
             <div>
               {/* Table */}
-              <div className="overflow-x-auto">
-                <table className="table-auto w-full divide-y divide-gray-200">
+              <div className="overflow-x-auto relative">
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   {/* Table header */}
-                  <thead className="text-xs uppercase text-gray-500 bg-gray-50 border-t border-gray-200">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                        <div className="font-semibold text-left">Order</div>
+                      <th className="py-3 px-6">
+                        <div className="font-semibold text-left">Name</div>
                       </th>
-                      <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                        <div className="font-semibold text-left">Date</div>
-                      </th>
-                      <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                        <div className="font-semibold text-left">Customer</div>
-                      </th>
-                      <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                        <div className="font-semibold text-left">Total</div>
-                      </th>
-                      <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                        <div className="font-semibold text-left">Status</div>
-                      </th>
-                      <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                        <div className="font-semibold">Items</div>
-                      </th>
-                      <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                        <div className="font-semibold text-left">Location</div>
-                      </th>
-                      <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                      <th className="py-3 px-6">
                         <div className="font-semibold text-left">
-                          Payment type
+                          Deposit Start Date
                         </div>
                       </th>
-                      <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                        <span className="sr-only">Menu</span>
+                      <th className="py-3 px-6">
+                        <div className="font-semibold text-left">
+                          Deposit End Date
+                        </div>
+                      </th>
+                      <th className="py-3 px-6">
+                        <div className="font-semibold text-left">
+                          Stake End Date
+                        </div>
+                      </th>
+                      <th className="py-3 px-6">
+                        <div className="font-semibold text-left">
+                          Number of Cats
+                        </div>
+                      </th>
+                      <th className="py-3 px-6">
+                        <div className="font-semibold text-left">
+                          Created At
+                        </div>
                       </th>
                     </tr>
                   </thead>
                   {/* Table body */}
+                  <tbody>
+                    {poolList?.map((pool) => (
+                      <tr className="bg-white border-b">
+                        <th
+                          scope="row"
+                          className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
+                        >
+                          {pool.poolName}
+                        </th>
+                        <td className="py-4 px-6">
+                          {new Date(pool.depositStartTs * 1000).toDateString()}{" "}
+                          {new Date(pool.depositStartTs * 1000).toTimeString()}
+                        </td>
+                        <td className="py-4 px-6">
+                          {new Date(pool.depositEndTs * 1000).toDateString()}{" "}
+                          {new Date(pool.depositEndTs * 1000).toTimeString()}
+                        </td>
+                        <td className="py-4 px-6">
+                          {new Date(pool.stakeEndTs * 1000).toDateString()}{" "}
+                          {new Date(pool.stakeEndTs * 1000).toTimeString()}
+                        </td>
+                        <td className="py-4 px-6">{pool.numberOfCats}</td>
+                        <td className="py-4 px-6">
+                          {new Date(pool.createdAt * 1000).toDateString()}{" "}
+                          {new Date(pool.createdAt * 1000).toTimeString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
               </div>
             </div>

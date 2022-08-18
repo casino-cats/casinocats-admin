@@ -1,6 +1,15 @@
 import * as anchor from "@project-serum/anchor";
 import { PublicKey } from "@solana/web3.js";
 
+type PoolType = {
+  poolName: string;
+  depositStartTs: number;
+  depositEndTs: number;
+  stakeEndTs: number;
+  numberOfCats: number;
+  createdAt: number;
+};
+
 type ClientType = {
   depositSol: () => Promise<any>;
   createNftList: ({
@@ -29,7 +38,7 @@ type ClientType = {
     depositEndTs: anchor.BN;
     stakeEndTs: anchor.BN;
   }) => Promise<any>;
-  fetchAllPool: () => Promise<any>;
+  fetchAllPool: () => Promise<PoolType[]>;
 };
 
-export type { ClientType };
+export type { ClientType, PoolType };
