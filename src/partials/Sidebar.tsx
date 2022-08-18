@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { AiFillDashboard } from "react-icons/ai";
 import LogoPng from "../images/logo.png";
 
 interface SidebarProps {

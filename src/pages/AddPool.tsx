@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../partials/Header";
 import Sidebar from "../partials/Sidebar";
 
@@ -23,62 +23,18 @@ const AddPool = () => {
           </div>
 
           <div className="bg-white shadow-lg rounded-sm border border-gray-200 relative p-4">
-            <div>
-              <h2 className="text-2xl text-gray-800 font-bold mb-6">
-                Input Types
-              </h2>
-              <div className="grid gap-5 grid-cols-3">
-                <div>
-                  {/* Start */}
-                  <div>
-                    <label
-                      className="block text-sm font-medium mb-1"
-                      htmlFor="default"
-                    >
-                      Default
-                    </label>
-                    <input
-                      id="default"
-                      className="border-2 border-slate-300"
-                      type="text"
-                    />
-                  </div>
-                  {/* End */}
-                </div>
-                <div>
-                  {/* Start */}
-                  <div>
-                    <label
-                      className="block text-sm font-medium mb-1"
-                      htmlFor="default"
-                    >
-                      Default
-                    </label>
-                    <input
-                      id="default"
-                      className="border-2 border-slate-300"
-                      type="text"
-                    />
-                  </div>
-                  {/* End */}
-                </div>
-                <div>
-                  {/* Start */}
-                  <div>
-                    <label
-                      className="block text-sm font-medium mb-1"
-                      htmlFor="default"
-                    >
-                      Default
-                    </label>
-                    <input
-                      id="default"
-                      className="border-2 border-slate-300"
-                      type="text"
-                    />
-                  </div>
-                  {/* End */}
-                </div>
+            <div className="grid gap-6 mb-6 md:grid-cols-2">
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                  First name
+                </label>
+                <input
+                  type="text"
+                  id="first_name"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="John"
+                  required
+                />
               </div>
             </div>
           </div>
