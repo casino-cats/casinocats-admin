@@ -113,6 +113,27 @@ export type CasinocatsProgram = {
       ];
     },
     {
+      name: "closePool";
+      accounts: [
+        {
+          name: "pool";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "manager";
+          isMut: false;
+          isSigner: true;
+        },
+        {
+          name: "receiver";
+          isMut: true;
+          isSigner: false;
+        }
+      ];
+      args: [];
+    },
+    {
       name: "depositCat";
       accounts: [
         {
@@ -394,6 +415,27 @@ export const IDL: CasinocatsProgram = {
           type: "u64",
         },
       ],
+    },
+    {
+      name: "closePool",
+      accounts: [
+        {
+          name: "pool",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "manager",
+          isMut: false,
+          isSigner: true,
+        },
+        {
+          name: "receiver",
+          isMut: true,
+          isSigner: false,
+        },
+      ],
+      args: [],
     },
     {
       name: "depositCat",
