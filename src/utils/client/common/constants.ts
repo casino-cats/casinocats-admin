@@ -1,0 +1,4 @@
+export const CASINOCATS_PROGRAM_ID =
+  "HxmMHb9rvqqDyPhfCNQpLTQ252GVsESYTVSeyZ388yL8";
+export const CASINOCATS_HOUSE_WALLET =
+  "ENjrpLjo1CA5WehTuzhuxXQprPiEfYomth6LN8Ecm8zC";
