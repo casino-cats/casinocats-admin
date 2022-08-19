@@ -2,6 +2,7 @@ import * as anchor from "@project-serum/anchor";
 import { PublicKey } from "@solana/web3.js";
 
 type PoolType = {
+  poolAddress: string;
   poolName: string;
   depositStartTs: number;
   depositEndTs: number;
@@ -38,6 +39,7 @@ type ClientType = {
     depositEndTs: anchor.BN;
     stakeEndTs: anchor.BN;
   }) => Promise<any>;
+  closePool: ({ pool }: { pool: PublicKey }) => Promise<any>;
   fetchAllPool: () => Promise<PoolType[]>;
 };
 

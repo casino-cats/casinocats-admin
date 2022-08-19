@@ -117,9 +117,22 @@ const createClient = ({
         .rpc();
       console.log(txSig);
     },
+    closePool: async ({ pool }) => {
+      const txSig = await program.methods
+        .closePool()
+        .accounts({
+          pool: pool,
+          manager: (program.provider as anchor.AnchorProvider).wallet.publicKey,
+          receiver: (program.provider as anchor.AnchorProvider).wallet
+            .publicKey,
+        })
+        .rpc();
+      console.log(txSig);
+    },
     fetchAllPool: async () => {
       const poolList = await program.account.pool.all();
       return poolList.map((pool) => ({
+        poolAddress: pool.publicKey.toBase58(),
         poolName: String.fromCharCode(...pool.account.poolName).replace(
           /\0/g,
           ""

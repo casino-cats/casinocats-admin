@@ -1,3 +1,4 @@
+import { PublicKey } from "@solana/web3.js";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Header from "../partials/Header";
@@ -17,6 +18,10 @@ const Pool = () => {
     };
     getPoolList();
   }, [client]);
+
+  const closePool = async (poolAddress: PublicKey) => {
+    await client?.closePool({ pool: poolAddress });
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -89,12 +94,15 @@ const Pool = () => {
                           Created At
                         </div>
                       </th>
+                      <th className="py-3 px-6">
+                        <div className="font-semibold text-left">Actions</div>
+                      </th>
                     </tr>
                   </thead>
                   {/* Table body */}
                   <tbody>
                     {poolList?.map((pool) => (
-                      <tr className="bg-white border-b">
+                      <tr className="bg-white border-b" key={pool.poolAddress}>
                         <th
                           scope="row"
                           className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
@@ -117,6 +125,15 @@ const Pool = () => {
                         <td className="py-4 px-6">
                           {new Date(pool.createdAt * 1000).toDateString()}{" "}
                           {new Date(pool.createdAt * 1000).toTimeString()}
+                        </td>
+                        <td className="py-4 px-6">
+                          <button
+                            onClick={() => {
+                              closePool(new PublicKey(pool.poolAddress));
+                            }}
+                          >
+                            ×
+                          </button>
                         </td>
                       </tr>
                     ))}
