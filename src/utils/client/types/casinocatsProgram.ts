@@ -88,6 +88,11 @@ export type CasinocatsProgram = {
           isSigner: true;
         },
         {
+          name: "authority";
+          isMut: false;
+          isSigner: false;
+        },
+        {
           name: "systemProgram";
           isMut: false;
           isSigner: false;
@@ -97,6 +102,10 @@ export type CasinocatsProgram = {
         {
           name: "poolName";
           type: "string";
+        },
+        {
+          name: "bumpAuth";
+          type: "u8";
         },
         {
           name: "depositStartTs";
@@ -227,6 +236,20 @@ export type CasinocatsProgram = {
             name: "poolName";
             type: {
               array: ["u8", 32];
+            };
+          },
+          {
+            name: "authority";
+            type: "publicKey";
+          },
+          {
+            name: "authoritySeed";
+            type: "publicKey";
+          },
+          {
+            name: "authorityBumpSeed";
+            type: {
+              array: ["u8", 1];
             };
           },
           {
@@ -392,6 +415,11 @@ export const IDL: CasinocatsProgram = {
           isSigner: true,
         },
         {
+          name: "authority",
+          isMut: false,
+          isSigner: false,
+        },
+        {
           name: "systemProgram",
           isMut: false,
           isSigner: false,
@@ -401,6 +429,10 @@ export const IDL: CasinocatsProgram = {
         {
           name: "poolName",
           type: "string",
+        },
+        {
+          name: "bumpAuth",
+          type: "u8",
         },
         {
           name: "depositStartTs",
@@ -531,6 +563,20 @@ export const IDL: CasinocatsProgram = {
             name: "poolName",
             type: {
               array: ["u8", 32],
+            },
+          },
+          {
+            name: "authority",
+            type: "publicKey",
+          },
+          {
+            name: "authoritySeed",
+            type: "publicKey",
+          },
+          {
+            name: "authorityBumpSeed",
+            type: {
+              array: ["u8", 1],
             },
           },
           {

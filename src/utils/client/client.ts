@@ -7,6 +7,7 @@ import {
   Transaction,
 } from "@solana/web3.js";
 import { CASINOCATS_HOUSE_WALLET, CASINOCATS_PROGRAM_ID } from "./common";
+import { findPoolAuthorityPDA } from "./common/pda";
 import { CasinocatsProgram, IDL } from "./types/casinocatsProgram";
 import { ClientType } from "./types/clientType";
 
@@ -105,12 +106,27 @@ const createClient = ({
       stakeEndTs,
     }) => {
       const keypair = Keypair.generate();
+
+      const [poolAuth, poolAuthBump] = await findPoolAuthorityPDA(
+        keypair.publicKey
+      );
+
+      console.log(poolAuthBump);
+
       const signers: Signer[] = [keypair];
+
       const txSig = await program.methods
-        .initPool(poolName, depositStartTs, depositEndTs, stakeEndTs)
+        .initPool(
+          poolName,
+          poolAuthBump,
+          depositStartTs,
+          depositEndTs,
+          stakeEndTs
+        )
         .accounts({
           pool: keypair.publicKey,
           manager: (program.provider as anchor.AnchorProvider).wallet.publicKey,
+          authority: poolAuth,
           systemProgram: SystemProgram.programId,
         })
         .signers(signers)
