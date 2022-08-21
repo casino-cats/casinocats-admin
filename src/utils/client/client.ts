@@ -107,26 +107,13 @@ const createClient = ({
     }) => {
       const keypair = Keypair.generate();
 
-      const [poolAuth, poolAuthBump] = await findPoolAuthorityPDA(
-        keypair.publicKey
-      );
-
-      console.log(poolAuthBump);
-
       const signers: Signer[] = [keypair];
 
       const txSig = await program.methods
-        .initPool(
-          poolName,
-          poolAuthBump,
-          depositStartTs,
-          depositEndTs,
-          stakeEndTs
-        )
+        .initPool(poolName, depositStartTs, depositEndTs, stakeEndTs)
         .accounts({
           pool: keypair.publicKey,
           manager: (program.provider as anchor.AnchorProvider).wallet.publicKey,
-          authority: poolAuth,
           systemProgram: SystemProgram.programId,
         })
         .signers(signers)

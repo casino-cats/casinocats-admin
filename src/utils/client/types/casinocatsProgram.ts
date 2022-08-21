@@ -88,11 +88,6 @@ export type CasinocatsProgram = {
           isSigner: true;
         },
         {
-          name: "authority";
-          isMut: false;
-          isSigner: false;
-        },
-        {
           name: "systemProgram";
           isMut: false;
           isSigner: false;
@@ -102,10 +97,6 @@ export type CasinocatsProgram = {
         {
           name: "poolName";
           type: "string";
-        },
-        {
-          name: "bumpAuth";
-          type: "u8";
         },
         {
           name: "depositStartTs";
@@ -192,6 +183,67 @@ export type CasinocatsProgram = {
         }
       ];
       args: [];
+    },
+    {
+      name: "claim";
+      accounts: [
+        {
+          name: "pool";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "owner";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "authority";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "catDepositReceipt";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "catBox";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "catMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "catDestination";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "associatedTokenProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "rent";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [];
     }
   ];
   accounts: [
@@ -206,6 +258,10 @@ export type CasinocatsProgram = {
           },
           {
             name: "catMint";
+            type: "publicKey";
+          },
+          {
+            name: "catOwner";
             type: "publicKey";
           }
         ];
@@ -239,6 +295,10 @@ export type CasinocatsProgram = {
             };
           },
           {
+            name: "manager";
+            type: "publicKey";
+          },
+          {
             name: "authority";
             type: "publicKey";
           },
@@ -251,10 +311,6 @@ export type CasinocatsProgram = {
             type: {
               array: ["u8", 1];
             };
-          },
-          {
-            name: "manager";
-            type: "publicKey";
           },
           {
             name: "locked";
@@ -321,6 +377,11 @@ export type CasinocatsProgram = {
       code: 6002;
       name: "InvalidDepositTs";
       msg: "Can not deposit cat now";
+    },
+    {
+      code: 6003;
+      name: "InvalidOwner";
+      msg: "You are not valid owner";
     }
   ];
 };
@@ -415,11 +476,6 @@ export const IDL: CasinocatsProgram = {
           isSigner: true,
         },
         {
-          name: "authority",
-          isMut: false,
-          isSigner: false,
-        },
-        {
           name: "systemProgram",
           isMut: false,
           isSigner: false,
@@ -429,10 +485,6 @@ export const IDL: CasinocatsProgram = {
         {
           name: "poolName",
           type: "string",
-        },
-        {
-          name: "bumpAuth",
-          type: "u8",
         },
         {
           name: "depositStartTs",
@@ -520,6 +572,67 @@ export const IDL: CasinocatsProgram = {
       ],
       args: [],
     },
+    {
+      name: "claim",
+      accounts: [
+        {
+          name: "pool",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "owner",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "authority",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "catDepositReceipt",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "catBox",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "catMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "catDestination",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "associatedTokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "rent",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [],
+    },
   ],
   accounts: [
     {
@@ -533,6 +646,10 @@ export const IDL: CasinocatsProgram = {
           },
           {
             name: "catMint",
+            type: "publicKey",
+          },
+          {
+            name: "catOwner",
             type: "publicKey",
           },
         ],
@@ -566,6 +683,10 @@ export const IDL: CasinocatsProgram = {
             },
           },
           {
+            name: "manager",
+            type: "publicKey",
+          },
+          {
             name: "authority",
             type: "publicKey",
           },
@@ -578,10 +699,6 @@ export const IDL: CasinocatsProgram = {
             type: {
               array: ["u8", 1],
             },
-          },
-          {
-            name: "manager",
-            type: "publicKey",
           },
           {
             name: "locked",
@@ -648,6 +765,11 @@ export const IDL: CasinocatsProgram = {
       code: 6002,
       name: "InvalidDepositTs",
       msg: "Can not deposit cat now",
+    },
+    {
+      code: 6003,
+      name: "InvalidOwner",
+      msg: "You are not valid owner",
     },
   ],
 };
