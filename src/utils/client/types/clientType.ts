@@ -11,8 +11,14 @@ type PoolType = {
   createdAt: number;
 };
 
+type NftListType = {
+  nftListAddress: string;
+  collectionName: string;
+};
+
 type ClientType = {
   depositSol: () => Promise<any>;
+
   createNftList: ({
     numberOfNfts,
     collectionName,
@@ -20,7 +26,9 @@ type ClientType = {
     numberOfNfts: number;
     collectionName: string;
   }) => Promise<any>;
-  fetchNftListAcc: () => Promise<any>;
+
+  fetchNftListAcc: () => Promise<NftListType[]>;
+
   updateNftList: ({
     nftList,
     mints,
@@ -28,6 +36,7 @@ type ClientType = {
     nftList: PublicKey;
     mints: { index: number; mint: PublicKey }[];
   }) => Promise<any>;
+
   initPool: ({
     poolName,
     depositStartTs,
@@ -39,8 +48,10 @@ type ClientType = {
     depositEndTs: anchor.BN;
     stakeEndTs: anchor.BN;
   }) => Promise<any>;
+
   closePool: ({ pool }: { pool: PublicKey }) => Promise<any>;
+
   fetchAllPool: () => Promise<PoolType[]>;
 };
 
-export type { ClientType, PoolType };
+export type { ClientType, PoolType, NftListType };

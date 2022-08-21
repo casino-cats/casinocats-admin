@@ -17,7 +17,8 @@
     "Devnet",
     "semibold",
     "casinocats",
-    "keypair"
+    "keypair",
+    "accs"
   ],
   "flagWords": []
 }

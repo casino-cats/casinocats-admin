@@ -33,6 +33,7 @@ const createClient = ({
         .rpc();
       console.log(txSig);
     },
+
     createNftList: async ({ numberOfNfts, collectionName }) => {
       const nftListKey = Keypair.generate();
 
@@ -85,9 +86,15 @@ const createClient = ({
 
       console.log(txSig);
     },
+
     fetchNftListAcc: async () => {
-      return await program.account.nftList.all();
+      const accs = await program.account.nftList.all();
+      return accs.map((acc) => ({
+        nftListAddress: acc.publicKey.toBase58(),
+        collectionName: acc.account.collectionName,
+      }));
     },
+
     updateNftList: async ({ nftList, mints }) => {
       const txSig = await program.methods
         .updateNftList(mints)
@@ -99,6 +106,7 @@ const createClient = ({
       console.log(txSig);
       return txSig;
     },
+
     initPool: async ({
       poolName,
       depositStartTs,
@@ -120,6 +128,7 @@ const createClient = ({
         .rpc();
       console.log(txSig);
     },
+
     closePool: async ({ pool }) => {
       const txSig = await program.methods
         .closePool()
@@ -132,6 +141,7 @@ const createClient = ({
         .rpc();
       console.log(txSig);
     },
+
     fetchAllPool: async () => {
       const poolList = await program.account.pool.all();
       return poolList.map((pool) => ({

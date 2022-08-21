@@ -96,6 +96,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </span>
               </NavLink>
             </li>
+            <li
+              className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
+                pathname === "/nft-list" && "bg-gray-900"
+              }`}
+            >
+              <NavLink
+                to="/nft-list"
+                className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
+                  pathname === "/nft-list" && "hover:text-gray-200"
+                }`}
+              >
+                <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                  NftList
+                </span>
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>
