@@ -134,6 +134,35 @@ export type CasinocatsProgram = {
       args: [];
     },
     {
+      name: "updatePool";
+      accounts: [
+        {
+          name: "pool";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "manager";
+          isMut: true;
+          isSigner: true;
+        }
+      ];
+      args: [
+        {
+          name: "depositStartTs";
+          type: "u64";
+        },
+        {
+          name: "depositEndTs";
+          type: "u64";
+        },
+        {
+          name: "stakeEndTs";
+          type: "u64";
+        }
+      ];
+    },
+    {
       name: "depositCat";
       accounts: [
         {
@@ -147,12 +176,22 @@ export type CasinocatsProgram = {
           isSigner: true;
         },
         {
+          name: "authority";
+          isMut: false;
+          isSigner: false;
+        },
+        {
           name: "catDepositReceipt";
           isMut: true;
           isSigner: false;
         },
         {
           name: "catBox";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "nftList";
           isMut: true;
           isSigner: false;
         },
@@ -382,6 +421,16 @@ export type CasinocatsProgram = {
       code: 6003;
       name: "InvalidOwner";
       msg: "You are not valid owner";
+    },
+    {
+      code: 6004;
+      name: "InvalidCat";
+      msg: "This NFT is not whitelisted";
+    },
+    {
+      code: 6005;
+      name: "InvalidClaimTs";
+      msg: "You can not claim your cat now";
     }
   ];
 };
@@ -522,6 +571,35 @@ export const IDL: CasinocatsProgram = {
       args: [],
     },
     {
+      name: "updatePool",
+      accounts: [
+        {
+          name: "pool",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "manager",
+          isMut: true,
+          isSigner: true,
+        },
+      ],
+      args: [
+        {
+          name: "depositStartTs",
+          type: "u64",
+        },
+        {
+          name: "depositEndTs",
+          type: "u64",
+        },
+        {
+          name: "stakeEndTs",
+          type: "u64",
+        },
+      ],
+    },
+    {
       name: "depositCat",
       accounts: [
         {
@@ -535,12 +613,22 @@ export const IDL: CasinocatsProgram = {
           isSigner: true,
         },
         {
+          name: "authority",
+          isMut: false,
+          isSigner: false,
+        },
+        {
           name: "catDepositReceipt",
           isMut: true,
           isSigner: false,
         },
         {
           name: "catBox",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "nftList",
           isMut: true,
           isSigner: false,
         },
@@ -770,6 +858,16 @@ export const IDL: CasinocatsProgram = {
       code: 6003,
       name: "InvalidOwner",
       msg: "You are not valid owner",
+    },
+    {
+      code: 6004,
+      name: "InvalidCat",
+      msg: "This NFT is not whitelisted",
+    },
+    {
+      code: 6005,
+      name: "InvalidClaimTs",
+      msg: "You can not claim your cat now",
     },
   ],
 };

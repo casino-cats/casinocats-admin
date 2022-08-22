@@ -142,6 +142,17 @@ const createClient = ({
       console.log(txSig);
     },
 
+    updatePool: async ({ pool, depositStartTs, depositEndTs, stakeEndTs }) => {
+      const txSig = await program.methods
+        .updatePool(depositStartTs, depositEndTs, stakeEndTs)
+        .accounts({
+          pool: pool,
+          manager: (program.provider as anchor.AnchorProvider).wallet.publicKey,
+        })
+        .rpc();
+      console.log(txSig);
+    },
+
     fetchAllPool: async () => {
       const poolList = await program.account.pool.all();
       return poolList.map((pool) => ({

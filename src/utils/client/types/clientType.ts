@@ -51,6 +51,18 @@ type ClientType = {
 
   closePool: ({ pool }: { pool: PublicKey }) => Promise<any>;
 
+  updatePool: ({
+    pool,
+    depositStartTs,
+    depositEndTs,
+    stakeEndTs,
+  }: {
+    pool: PublicKey;
+    depositStartTs: anchor.BN;
+    depositEndTs: anchor.BN;
+    stakeEndTs: anchor.BN;
+  }) => Promise<any>;
+
   fetchAllPool: () => Promise<PoolType[]>;
 };
 

@@ -95,11 +95,14 @@ const NftList = () => {
                 + Add New NFT List
               </button>
             </div>
+
             <div className="bg-white shadow-lg rounded-sm border border-gray-200 relative mt-6">
               <header className="px-5 py-4">
                 <h2 className="font-semibold text-gray-800">
-                  All Pools{" "}
-                  <span className="text-gray-400 font-medium">10</span>
+                  All NFT Lists{" "}
+                  <span className="text-gray-400 font-medium">
+                    {nftLists?.length}
+                  </span>
                 </h2>
               </header>
               {/* Table */}
@@ -110,7 +113,7 @@ const NftList = () => {
                     <tr>
                       <th className="py-3 px-6">
                         <div className="font-semibold text-left">
-                          CollectionName
+                          Collection Name
                         </div>
                       </th>
                       <th className="py-3 px-6">
