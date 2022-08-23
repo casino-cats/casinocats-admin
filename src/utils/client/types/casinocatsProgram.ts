@@ -148,6 +148,41 @@ export type CasinocatsProgram = {
       ];
     },
     {
+      name: "refundSol";
+      accounts: [
+        {
+          name: "pool";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "solPot";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "manager";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "bumpPot";
+          type: "u8";
+        },
+        {
+          name: "amount";
+          type: "u64";
+        }
+      ];
+    },
+    {
       name: "closePool";
       accounts: [
         {
@@ -594,6 +629,41 @@ export const IDL: CasinocatsProgram = {
     },
     {
       name: "fundSol",
+      accounts: [
+        {
+          name: "pool",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "solPot",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "manager",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "bumpPot",
+          type: "u8",
+        },
+        {
+          name: "amount",
+          type: "u64",
+        },
+      ],
+    },
+    {
+      name: "refundSol",
       accounts: [
         {
           name: "pool",

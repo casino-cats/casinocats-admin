@@ -41,6 +41,15 @@ const Pool = () => {
     }
   };
 
+  const refundSol = async () => {
+    if (selectedPool) {
+      await client?.refundSol({
+        pool: new PublicKey(selectedPool),
+        amount: solAmount,
+      });
+    }
+  };
+
   const updatePool = async () => {
     if (selectedPool && client) {
       await client.updatePool({
@@ -251,13 +260,22 @@ const Pool = () => {
                             value={solAmount}
                             onChange={onSolAmountChange}
                           />
-                          <button
-                            type="submit"
-                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            onClick={() => fundSol()}
-                          >
-                            Add
-                          </button>
+                          <div>
+                            <button
+                              type="submit"
+                              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mx-2"
+                              onClick={() => fundSol()}
+                            >
+                              Add
+                            </button>
+                            <button
+                              type="submit"
+                              className="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800 mx-2"
+                              onClick={() => refundSol()}
+                            >
+                              Refund
+                            </button>
+                          </div>
                         </div>
                       </div>
                       <div className="grid gap-6 mt-6">

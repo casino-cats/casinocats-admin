@@ -159,6 +159,22 @@ const createClient = ({
       console.log(txSig);
     },
 
+    refundSol: async ({ pool, amount }) => {
+      const [solPot, solPotBump] = await findSolPotPDA(pool);
+      console.log(solPot.toBase58());
+      console.log(solPotBump);
+      const txSig = await program.methods
+        .refundSol(solPotBump, new anchor.BN(amount * LAMPORTS_PER_SOL))
+        .accounts({
+          pool: pool,
+          solPot: solPot,
+          manager: (program.provider as anchor.AnchorProvider).wallet.publicKey,
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc();
+      console.log(txSig);
+    },
+
     updatePool: async ({ pool, depositStartTs, depositEndTs, stakeEndTs }) => {
       const txSig = await program.methods
         .updatePool(depositStartTs, depositEndTs, stakeEndTs)
@@ -182,7 +198,7 @@ const createClient = ({
         depositEndTs: pool.account.depositEndTs.toNumber(),
         stakeEndTs: pool.account.stakeEndTs.toNumber(),
         numberOfCats: pool.account.numberOfCats,
-        solAmount: pool.account.amountOfSol.toNumber(),
+        solAmount: pool.account.amountOfSol.toNumber() / LAMPORTS_PER_SOL,
         createdAt: pool.account.createdTs.toNumber(),
       }));
     },

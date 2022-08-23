@@ -60,6 +60,14 @@ type ClientType = {
     amount: number;
   }) => Promise<any>;
 
+  refundSol: ({
+    pool,
+    amount,
+  }: {
+    pool: PublicKey;
+    amount: number;
+  }) => Promise<any>;
+
   updatePool: ({
     pool,
     depositStartTs,
