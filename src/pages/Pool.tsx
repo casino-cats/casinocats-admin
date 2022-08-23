@@ -17,6 +17,8 @@ const Pool = () => {
   const [depositStartDate, setDepositStartDate] = useState(new Date());
   const [depositEndDate, setDepositEndDate] = useState(new Date());
   const [stakeEndDate, setStakeEndDate] = useState(new Date());
+  const [showFundModal, setShowFundModal] = useState(false);
+  const [solAmount, setSolAmount] = useState(0);
 
   useEffect(() => {
     const getPoolList = async () => {
@@ -25,6 +27,19 @@ const Pool = () => {
     };
     getPoolList();
   }, [client]);
+
+  const onSolAmountChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setSolAmount(parseFloat(e.currentTarget.value));
+  };
+
+  const fundSol = async () => {
+    if (selectedPool) {
+      await client?.fundSol({
+        pool: new PublicKey(selectedPool),
+        amount: solAmount,
+      });
+    }
+  };
 
   const updatePool = async () => {
     if (selectedPool && client) {
@@ -108,6 +123,11 @@ const Pool = () => {
                         </th>
                         <th className="py-3 px-6">
                           <div className="font-semibold text-left">
+                            Reward Pot
+                          </div>
+                        </th>
+                        <th className="py-3 px-6">
+                          <div className="font-semibold text-left">
                             Created At
                           </div>
                         </th>
@@ -146,6 +166,7 @@ const Pool = () => {
                             {new Date(pool.stakeEndTs * 1000).toTimeString()}
                           </td>
                           <td className="py-4 px-6">{pool.numberOfCats}</td>
+                          <td className="py-4 px-6">{pool.solAmount}</td>
                           <td className="py-4 px-6">
                             {new Date(pool.createdAt * 1000).toDateString()}{" "}
                             {new Date(pool.createdAt * 1000).toTimeString()}
@@ -158,6 +179,15 @@ const Pool = () => {
                               className=" bg-red-600 hover:bg-red-800 text-white p-1 m-1"
                             >
                               Close
+                            </button>
+                            <button
+                              onClick={() => {
+                                setSelectedPool(pool.poolAddress);
+                                setShowFundModal(true);
+                              }}
+                              className=" bg-red-600 hover:bg-red-800 text-white p-1 m-1"
+                            >
+                              Fund
                             </button>
                             <button
                               onClick={() => {
@@ -186,6 +216,92 @@ const Pool = () => {
               </div>
             </div>
           </div>
+          {/* fund modal */}
+          {showFundModal ? (
+            <>
+              <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                  {/*content*/}
+                  <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                    {/*header*/}
+                    <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                      <h3 className="text-3xl font-semibold">Fund Rewards</h3>
+                      <button
+                        className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                        onClick={() => setShowFundModal(false)}
+                      >
+                        <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                          ×
+                        </span>
+                      </button>
+                    </div>
+                    {/*body*/}
+                    <div className="relative p-6 flex-auto">
+                      <div className="grid gap-6">
+                        {/* fund sol */}
+                        <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-gray-300">
+                          Fund SOL
+                        </label>
+                        <div className="grid gap-6 grid-cols-2">
+                          <input
+                            type="number"
+                            id="sol_amount"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="0"
+                            value={solAmount}
+                            onChange={onSolAmountChange}
+                          />
+                          <button
+                            type="submit"
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            onClick={() => fundSol()}
+                          >
+                            Add
+                          </button>
+                        </div>
+                      </div>
+                      <div className="grid gap-6 mt-6">
+                        {/* fund USDC */}
+                        <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-gray-300">
+                          Fund USDC
+                        </label>
+                        <div className="grid gap-6 grid-cols-2">
+                          <input
+                            type="text"
+                            id="pool_name"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="0"
+
+                            // value={poolName}
+                            // onChange={onPoolNameChange}
+                          />
+                          <button
+                            type="submit"
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            // onClick={() => initPool()}
+                          >
+                            Add
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/*footer*/}
+                    <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                      <button
+                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => setShowFundModal(false)}
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+            </>
+          ) : null}
           {/* update pool modal */}
           {showModal ? (
             <>
@@ -214,6 +330,7 @@ const Pool = () => {
                             Deposit Start Date/Time
                           </label>
                           <DateTimePicker
+                            format="y-MM-dd HH:mm"
                             onChange={setDepositStartDate}
                             value={depositStartDate}
                           />
@@ -224,6 +341,7 @@ const Pool = () => {
                             Deposit End Date/Time
                           </label>
                           <DateTimePicker
+                            format="y-MM-dd HH:mm"
                             onChange={setDepositEndDate}
                             value={depositEndDate}
                           />
@@ -234,6 +352,7 @@ const Pool = () => {
                             Stake End Date/Time
                           </label>
                           <DateTimePicker
+                            format="y-MM-dd HH:mm"
                             onChange={setStakeEndDate}
                             value={stakeEndDate}
                           />

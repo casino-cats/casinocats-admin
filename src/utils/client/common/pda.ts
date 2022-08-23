@@ -3,6 +3,7 @@ import {
   CASINOCATS_PROGRAM_ID,
   PDA_CAT_BOX_WORD,
   PDA_CAT_DEPOSIT_RECEIPT_WORD,
+  PDA_SOL_POT_WORD,
 } from "./constants";
 
 export const findPoolAuthorityPDA = async (pool: PublicKey) => {
@@ -25,6 +26,13 @@ export const findCatDepositReceiptPDA = async (
 ) => {
   return await PublicKey.findProgramAddress(
     [Buffer.from(PDA_CAT_DEPOSIT_RECEIPT_WORD), pool.toBytes(), mint.toBytes()],
+    new PublicKey(CASINOCATS_PROGRAM_ID)
+  );
+};
+
+export const findSolPotPDA = async (pool: PublicKey) => {
+  return await PublicKey.findProgramAddress(
+    [Buffer.from(PDA_SOL_POT_WORD), pool.toBytes()],
     new PublicKey(CASINOCATS_PROGRAM_ID)
   );
 };

@@ -5,3 +5,4 @@ export const CASINOCATS_HOUSE_WALLET =
 
 export const PDA_CAT_BOX_WORD = "cat_box";
 export const PDA_CAT_DEPOSIT_RECEIPT_WORD = "cat_deposit_receipt";
+export const PDA_SOL_POT_WORD = "sol_reward_pot";

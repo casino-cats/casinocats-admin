@@ -8,6 +8,7 @@ type PoolType = {
   depositEndTs: number;
   stakeEndTs: number;
   numberOfCats: number;
+  solAmount: number;
   createdAt: number;
 };
 
@@ -50,6 +51,14 @@ type ClientType = {
   }) => Promise<any>;
 
   closePool: ({ pool }: { pool: PublicKey }) => Promise<any>;
+
+  fundSol: ({
+    pool,
+    amount,
+  }: {
+    pool: PublicKey;
+    amount: number;
+  }) => Promise<any>;
 
   updatePool: ({
     pool,

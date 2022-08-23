@@ -1,13 +1,14 @@
 import * as anchor from "@project-serum/anchor";
 import {
   Keypair,
+  LAMPORTS_PER_SOL,
   PublicKey,
   Signer,
   SystemProgram,
   Transaction,
 } from "@solana/web3.js";
 import { CASINOCATS_HOUSE_WALLET, CASINOCATS_PROGRAM_ID } from "./common";
-import { findPoolAuthorityPDA } from "./common/pda";
+import { findSolPotPDA } from "./common/pda";
 import { CasinocatsProgram, IDL } from "./types/casinocatsProgram";
 import { ClientType } from "./types/clientType";
 
@@ -142,6 +143,22 @@ const createClient = ({
       console.log(txSig);
     },
 
+    fundSol: async ({ pool, amount }) => {
+      const [solPot, solPotBump] = await findSolPotPDA(pool);
+      console.log(solPot.toBase58());
+      console.log(solPotBump);
+      const txSig = await program.methods
+        .fundSol(solPotBump, new anchor.BN(amount * LAMPORTS_PER_SOL))
+        .accounts({
+          pool: pool,
+          solPot: solPot,
+          manager: (program.provider as anchor.AnchorProvider).wallet.publicKey,
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc();
+      console.log(txSig);
+    },
+
     updatePool: async ({ pool, depositStartTs, depositEndTs, stakeEndTs }) => {
       const txSig = await program.methods
         .updatePool(depositStartTs, depositEndTs, stakeEndTs)
@@ -165,6 +182,7 @@ const createClient = ({
         depositEndTs: pool.account.depositEndTs.toNumber(),
         stakeEndTs: pool.account.stakeEndTs.toNumber(),
         numberOfCats: pool.account.numberOfCats,
+        solAmount: pool.account.amountOfSol.toNumber(),
         createdAt: pool.account.createdTs.toNumber(),
       }));
     },

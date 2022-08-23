@@ -68,6 +68,7 @@ const AddPool = () => {
                   Deposit start date
                 </label>
                 <DateTimePicker
+                  format="y-MM-dd HH:mm"
                   onChange={onDepositStartDateChange}
                   value={depositStartDate}
                 />
@@ -78,6 +79,7 @@ const AddPool = () => {
                   Deposit End date
                 </label>
                 <DateTimePicker
+                  format="y-MM-dd HH:mm"
                   onChange={onDepositEndDateChange}
                   value={depositEndDate}
                 />
@@ -88,6 +90,7 @@ const AddPool = () => {
                   Stake End date
                 </label>
                 <DateTimePicker
+                  format="y-MM-dd HH:mm"
                   onChange={onStakeEndDateChange}
                   value={stakeEndDate}
                 />

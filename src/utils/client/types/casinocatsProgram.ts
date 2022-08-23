@@ -113,6 +113,41 @@ export type CasinocatsProgram = {
       ];
     },
     {
+      name: "fundSol";
+      accounts: [
+        {
+          name: "pool";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "solPot";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "manager";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "bumpPot";
+          type: "u8";
+        },
+        {
+          name: "amount";
+          type: "u64";
+        }
+      ];
+    },
+    {
       name: "closePool";
       accounts: [
         {
@@ -372,7 +407,15 @@ export type CasinocatsProgram = {
             type: "u32";
           },
           {
-            name: "amountOfReward";
+            name: "amountOfSol";
+            type: "u64";
+          },
+          {
+            name: "amountOfUsdc";
+            type: "u64";
+          },
+          {
+            name: "amountOfCcc";
             type: "u64";
           },
           {
@@ -545,6 +588,41 @@ export const IDL: CasinocatsProgram = {
         },
         {
           name: "stakeEndTs",
+          type: "u64",
+        },
+      ],
+    },
+    {
+      name: "fundSol",
+      accounts: [
+        {
+          name: "pool",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "solPot",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "manager",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "bumpPot",
+          type: "u8",
+        },
+        {
+          name: "amount",
           type: "u64",
         },
       ],
@@ -809,7 +887,15 @@ export const IDL: CasinocatsProgram = {
             type: "u32",
           },
           {
-            name: "amountOfReward",
+            name: "amountOfSol",
+            type: "u64",
+          },
+          {
+            name: "amountOfUsdc",
+            type: "u64",
+          },
+          {
+            name: "amountOfCcc",
             type: "u64",
           },
           {
