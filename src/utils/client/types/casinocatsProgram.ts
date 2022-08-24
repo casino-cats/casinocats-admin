@@ -83,9 +83,44 @@ export type CasinocatsProgram = {
           isSigner: true;
         },
         {
+          name: "poolAuthority";
+          isMut: false;
+          isSigner: false;
+        },
+        {
           name: "manager";
           isMut: true;
           isSigner: true;
+        },
+        {
+          name: "usdcRewardPot";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "cccRewardPot";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "cccMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "rent";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
         },
         {
           name: "systemProgram";
@@ -598,9 +633,44 @@ export const IDL: CasinocatsProgram = {
           isSigner: true,
         },
         {
+          name: "poolAuthority",
+          isMut: false,
+          isSigner: false,
+        },
+        {
           name: "manager",
           isMut: true,
           isSigner: true,
+        },
+        {
+          name: "usdcRewardPot",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "cccRewardPot",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "cccMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "rent",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
         },
         {
           name: "systemProgram",

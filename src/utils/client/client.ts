@@ -1,4 +1,5 @@
 import * as anchor from "@project-serum/anchor";
+import { TOKEN_PROGRAM_ID } from "@project-serum/anchor/dist/cjs/utils/token";
 import {
   Keypair,
   LAMPORTS_PER_SOL,
@@ -7,8 +8,18 @@ import {
   SystemProgram,
   Transaction,
 } from "@solana/web3.js";
-import { CASINOCATS_HOUSE_WALLET, CASINOCATS_PROGRAM_ID } from "./common";
-import { findSolPotPDA } from "./common/pda";
+import {
+  CASINOCATS_HOUSE_WALLET,
+  CASINOCATS_PROGRAM_ID,
+  CCC_MINT_DEVNET,
+  USDC_MINT_DEVNET,
+} from "./common";
+import {
+  findCccRewardPotPDA,
+  findPoolAuthorityPDA,
+  findSolPotPDA,
+  findUsdcRewardPotPDA,
+} from "./common/pda";
 import { CasinocatsProgram, IDL } from "./types/casinocatsProgram";
 import { ClientType } from "./types/clientType";
 
@@ -118,11 +129,32 @@ const createClient = ({
 
       const signers: Signer[] = [keypair];
 
+      const [poolAuthority, poolAuthorityBump] = await findPoolAuthorityPDA(
+        keypair.publicKey
+      );
+
+      console.log("pool authority", poolAuthority.toBase58());
+
+      const [usdcRewardPot, usdcRewardPotBump] = await findUsdcRewardPotPDA(
+        keypair.publicKey
+      );
+
+      const [cccRewardPot, cccRewardPotBump] = await findCccRewardPotPDA(
+        keypair.publicKey
+      );
+
       const txSig = await program.methods
         .initPool(poolName, depositStartTs, depositEndTs, stakeEndTs)
         .accounts({
           pool: keypair.publicKey,
           manager: (program.provider as anchor.AnchorProvider).wallet.publicKey,
+          poolAuthority: poolAuthority,
+          usdcRewardPot: usdcRewardPot,
+          usdcMint: new PublicKey(USDC_MINT_DEVNET),
+          cccRewardPot: cccRewardPot,
+          cccMint: new PublicKey(CCC_MINT_DEVNET),
+          rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+          tokenProgram: TOKEN_PROGRAM_ID,
           systemProgram: SystemProgram.programId,
         })
         .signers(signers)
