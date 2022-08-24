@@ -20,6 +20,7 @@ const Pool = () => {
   const [showFundModal, setShowFundModal] = useState(false);
   const [solAmount, setSolAmount] = useState(0);
   const [usdcAmount, setUsdcAmount] = useState(0);
+  const [cccAmount, setCccAmount] = useState(0);
 
   useEffect(() => {
     const getPoolList = async () => {
@@ -35,6 +36,10 @@ const Pool = () => {
 
   const onUsdcAmountChange = (e: React.FormEvent<HTMLInputElement>) => {
     setUsdcAmount(parseFloat(e.currentTarget.value));
+  };
+
+  const onCccAmountChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setCccAmount(parseFloat(e.currentTarget.value));
   };
 
   const fundSol = async () => {
@@ -69,6 +74,24 @@ const Pool = () => {
       await client?.refundUsdc({
         pool: new PublicKey(selectedPool),
         amount: usdcAmount,
+      });
+    }
+  };
+
+  const fundCcc = async () => {
+    if (selectedPool) {
+      await client?.fundCcc({
+        pool: new PublicKey(selectedPool),
+        amount: cccAmount,
+      });
+    }
+  };
+
+  const refundCcc = async () => {
+    if (selectedPool) {
+      await client?.refundCcc({
+        pool: new PublicKey(selectedPool),
+        amount: cccAmount,
       });
     }
   };
@@ -334,6 +357,38 @@ const Pool = () => {
                               type="submit"
                               className="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800 mx-2"
                               onClick={() => refundUsdc()}
+                            >
+                              Refund
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="grid gap-6 mt-6">
+                        {/* fund USDC */}
+                        <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-gray-300">
+                          Fund CCC
+                        </label>
+                        <div className="grid gap-6 grid-cols-2">
+                          <input
+                            type="number"
+                            id="ccc_amount"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="0"
+                            value={cccAmount}
+                            onChange={onCccAmountChange}
+                          />
+                          <div>
+                            <button
+                              type="submit"
+                              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mx-2"
+                              onClick={() => fundCcc()}
+                            >
+                              Add
+                            </button>
+                            <button
+                              type="submit"
+                              className="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800 mx-2"
+                              onClick={() => refundCcc()}
                             >
                               Refund
                             </button>

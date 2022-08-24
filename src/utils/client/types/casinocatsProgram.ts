@@ -318,6 +318,106 @@ export type CasinocatsProgram = {
       ];
     },
     {
+      name: "fundCcc";
+      accounts: [
+        {
+          name: "pool";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "poolAuthority";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "cccRewardPot";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "cccRewardSource";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "cccMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "manager";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "bumpPot";
+          type: "u8";
+        },
+        {
+          name: "amount";
+          type: "u64";
+        }
+      ];
+    },
+    {
+      name: "refundCcc";
+      accounts: [
+        {
+          name: "pool";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "poolAuthority";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "cccRewardPot";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "cccRewardSource";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "cccMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "manager";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "bumpPot";
+          type: "u8";
+        },
+        {
+          name: "amount";
+          type: "u64";
+        }
+      ];
+    },
+    {
       name: "closePool";
       accounts: [
         {
@@ -942,6 +1042,106 @@ export const IDL: CasinocatsProgram = {
         },
         {
           name: "usdcMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "manager",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "bumpPot",
+          type: "u8",
+        },
+        {
+          name: "amount",
+          type: "u64",
+        },
+      ],
+    },
+    {
+      name: "fundCcc",
+      accounts: [
+        {
+          name: "pool",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "poolAuthority",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "cccRewardPot",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "cccRewardSource",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "cccMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "manager",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "bumpPot",
+          type: "u8",
+        },
+        {
+          name: "amount",
+          type: "u64",
+        },
+      ],
+    },
+    {
+      name: "refundCcc",
+      accounts: [
+        {
+          name: "pool",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "poolAuthority",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "cccRewardPot",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "cccRewardSource",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "cccMint",
           isMut: false,
           isSigner: false,
         },

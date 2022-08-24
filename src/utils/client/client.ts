@@ -12,6 +12,7 @@ import {
   CASINOCATS_HOUSE_WALLET,
   CASINOCATS_PROGRAM_ID,
   CCC_MINT_DEVNET,
+  DECIMALS_PER_CCC,
   DECIMALS_PER_USDC,
   findATA,
   USDC_MINT_DEVNET,
@@ -261,6 +262,58 @@ const createClient = ({
       console.log(txSig);
     },
 
+    fundCcc: async ({ pool, amount }) => {
+      const [poolAuthority, poolAuthorityBump] = await findPoolAuthorityPDA(
+        pool
+      );
+      const cccPubkey = new PublicKey(CCC_MINT_DEVNET);
+      let cccTokenAccount = await findATA(
+        cccPubkey,
+        (program.provider as anchor.AnchorProvider).wallet.publicKey
+      );
+      const [cccPot, cccPotBump] = await findCccRewardPotPDA(pool);
+
+      const txSig = await program.methods
+        .fundCcc(cccPotBump, new anchor.BN(amount * DECIMALS_PER_CCC))
+        .accounts({
+          pool: pool,
+          poolAuthority: poolAuthority,
+          cccRewardPot: cccPot,
+          cccRewardSource: cccTokenAccount,
+          cccMint: new PublicKey(CCC_MINT_DEVNET),
+          manager: (program.provider as anchor.AnchorProvider).wallet.publicKey,
+          tokenProgram: TOKEN_PROGRAM_ID,
+        })
+        .rpc();
+      console.log(txSig);
+    },
+
+    refundCcc: async ({ pool, amount }) => {
+      const [poolAuthority, poolAuthorityBump] = await findPoolAuthorityPDA(
+        pool
+      );
+      const cccPubkey = new PublicKey(CCC_MINT_DEVNET);
+      let cccTokenAccount = await findATA(
+        cccPubkey,
+        (program.provider as anchor.AnchorProvider).wallet.publicKey
+      );
+      const [cccPot, cccPotBump] = await findCccRewardPotPDA(pool);
+
+      const txSig = await program.methods
+        .refundCcc(cccPotBump, new anchor.BN(amount * DECIMALS_PER_CCC))
+        .accounts({
+          pool: pool,
+          poolAuthority: poolAuthority,
+          cccRewardPot: cccPot,
+          cccRewardSource: cccTokenAccount,
+          cccMint: new PublicKey(CCC_MINT_DEVNET),
+          manager: (program.provider as anchor.AnchorProvider).wallet.publicKey,
+          tokenProgram: TOKEN_PROGRAM_ID,
+        })
+        .rpc();
+      console.log(txSig);
+    },
+
     updatePool: async ({ pool, depositStartTs, depositEndTs, stakeEndTs }) => {
       const txSig = await program.methods
         .updatePool(depositStartTs, depositEndTs, stakeEndTs)
@@ -286,7 +339,7 @@ const createClient = ({
         numberOfCats: pool.account.numberOfCats,
         solAmount: pool.account.amountOfSol.toNumber() / LAMPORTS_PER_SOL,
         usdcAmount: pool.account.amountOfUsdc.toNumber() / DECIMALS_PER_USDC,
-        cccAmount: pool.account.amountOfCcc.toNumber() / 100,
+        cccAmount: pool.account.amountOfCcc.toNumber() / DECIMALS_PER_CCC,
         createdAt: pool.account.createdTs.toNumber(),
       }));
     },

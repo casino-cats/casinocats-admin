@@ -86,6 +86,22 @@ type ClientType = {
     amount: number;
   }) => Promise<any>;
 
+  fundCcc: ({
+    pool,
+    amount,
+  }: {
+    pool: PublicKey;
+    amount: number;
+  }) => Promise<any>;
+
+  refundCcc: ({
+    pool,
+    amount,
+  }: {
+    pool: PublicKey;
+    amount: number;
+  }) => Promise<any>;
+
   updatePool: ({
     pool,
     depositStartTs,
