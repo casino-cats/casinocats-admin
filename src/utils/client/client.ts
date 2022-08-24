@@ -210,10 +210,10 @@ const createClient = ({
     },
 
     fundUsdc: async ({ pool, amount }) => {
-      console.log(amount);
-      const usdcPubkey = new PublicKey(
-        "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU"
+      const [poolAuthority, poolAuthorityBump] = await findPoolAuthorityPDA(
+        pool
       );
+      const usdcPubkey = new PublicKey(USDC_MINT_DEVNET);
       let usdcTokenAccount = await findATA(
         usdcPubkey,
         (program.provider as anchor.AnchorProvider).wallet.publicKey
@@ -224,6 +224,33 @@ const createClient = ({
         .fundUsdc(usdcPotBump, new anchor.BN(amount * DECIMALS_PER_USDC))
         .accounts({
           pool: pool,
+          poolAuthority: poolAuthority,
+          usdcRewardPot: usdcPot,
+          usdcRewardSource: usdcTokenAccount,
+          usdcMint: new PublicKey(USDC_MINT_DEVNET),
+          manager: (program.provider as anchor.AnchorProvider).wallet.publicKey,
+          tokenProgram: TOKEN_PROGRAM_ID,
+        })
+        .rpc();
+      console.log(txSig);
+    },
+
+    refundUsdc: async ({ pool, amount }) => {
+      const [poolAuthority, poolAuthorityBump] = await findPoolAuthorityPDA(
+        pool
+      );
+      const usdcPubkey = new PublicKey(USDC_MINT_DEVNET);
+      let usdcTokenAccount = await findATA(
+        usdcPubkey,
+        (program.provider as anchor.AnchorProvider).wallet.publicKey
+      );
+      const [usdcPot, usdcPotBump] = await findUsdcRewardPotPDA(pool);
+
+      const txSig = await program.methods
+        .refundUsdc(usdcPotBump, new anchor.BN(amount * DECIMALS_PER_USDC))
+        .accounts({
+          pool: pool,
+          poolAuthority: poolAuthority,
           usdcRewardPot: usdcPot,
           usdcRewardSource: usdcTokenAccount,
           usdcMint: new PublicKey(USDC_MINT_DEVNET),

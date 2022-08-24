@@ -226,6 +226,61 @@ export type CasinocatsProgram = {
           isSigner: false;
         },
         {
+          name: "poolAuthority";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "usdcRewardPot";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcRewardSource";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "manager";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "bumpPot";
+          type: "u8";
+        },
+        {
+          name: "amount";
+          type: "u64";
+        }
+      ];
+    },
+    {
+      name: "refundUsdc";
+      accounts: [
+        {
+          name: "pool";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "poolAuthority";
+          isMut: false;
+          isSigner: false;
+        },
+        {
           name: "usdcRewardPot";
           isMut: true;
           isSigner: false;
@@ -818,6 +873,61 @@ export const IDL: CasinocatsProgram = {
         {
           name: "pool",
           isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "poolAuthority",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "usdcRewardPot",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcRewardSource",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "manager",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "bumpPot",
+          type: "u8",
+        },
+        {
+          name: "amount",
+          type: "u64",
+        },
+      ],
+    },
+    {
+      name: "refundUsdc",
+      accounts: [
+        {
+          name: "pool",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "poolAuthority",
+          isMut: false,
           isSigner: false,
         },
         {
