@@ -1,6 +1,8 @@
 export const USDC_MINT_MAINNET = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
 export const USDC_MINT_DEVNET = "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU";
 
+export const DECIMALS_PER_USDC = 1000000;
+
 export const CCC_MINT_DEVNET = "Duu6nCkSR8kXdfVsB3Yd8FCqgYTUakjRWEDLSgLX4BCD";
 
 export const CASINOCATS_PROGRAM_ID =

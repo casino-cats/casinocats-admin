@@ -218,6 +218,51 @@ export type CasinocatsProgram = {
       ];
     },
     {
+      name: "fundUsdc";
+      accounts: [
+        {
+          name: "pool";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcRewardPot";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcRewardSource";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "manager";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "bumpPot";
+          type: "u8";
+        },
+        {
+          name: "amount";
+          type: "u64";
+        }
+      ];
+    },
+    {
       name: "closePool";
       accounts: [
         {
@@ -752,6 +797,51 @@ export const IDL: CasinocatsProgram = {
         },
         {
           name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "bumpPot",
+          type: "u8",
+        },
+        {
+          name: "amount",
+          type: "u64",
+        },
+      ],
+    },
+    {
+      name: "fundUsdc",
+      accounts: [
+        {
+          name: "pool",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcRewardPot",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcRewardSource",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "manager",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "tokenProgram",
           isMut: false,
           isSigner: false,
         },

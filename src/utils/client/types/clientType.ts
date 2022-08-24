@@ -9,6 +9,8 @@ type PoolType = {
   stakeEndTs: number;
   numberOfCats: number;
   solAmount: number;
+  usdcAmount: number;
+  cccAmount: number;
   createdAt: number;
 };
 
@@ -61,6 +63,14 @@ type ClientType = {
   }) => Promise<any>;
 
   refundSol: ({
+    pool,
+    amount,
+  }: {
+    pool: PublicKey;
+    amount: number;
+  }) => Promise<any>;
+
+  fundUsdc: ({
     pool,
     amount,
   }: {

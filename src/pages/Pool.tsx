@@ -19,6 +19,7 @@ const Pool = () => {
   const [stakeEndDate, setStakeEndDate] = useState(new Date());
   const [showFundModal, setShowFundModal] = useState(false);
   const [solAmount, setSolAmount] = useState(0);
+  const [usdcAmount, setUsdcAmount] = useState(0);
 
   useEffect(() => {
     const getPoolList = async () => {
@@ -30,6 +31,10 @@ const Pool = () => {
 
   const onSolAmountChange = (e: React.FormEvent<HTMLInputElement>) => {
     setSolAmount(parseFloat(e.currentTarget.value));
+  };
+
+  const onUsdcAmountChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setUsdcAmount(parseFloat(e.currentTarget.value));
   };
 
   const fundSol = async () => {
@@ -46,6 +51,15 @@ const Pool = () => {
       await client?.refundSol({
         pool: new PublicKey(selectedPool),
         amount: solAmount,
+      });
+    }
+  };
+
+  const fundUsdc = async () => {
+    if (selectedPool) {
+      await client?.fundUsdc({
+        pool: new PublicKey(selectedPool),
+        amount: usdcAmount,
       });
     }
   };
@@ -175,7 +189,14 @@ const Pool = () => {
                             {new Date(pool.stakeEndTs * 1000).toTimeString()}
                           </td>
                           <td className="py-4 px-6">{pool.numberOfCats}</td>
-                          <td className="py-4 px-6">{pool.solAmount}</td>
+                          <td className="py-4 px-6">
+                            <strong>SOL:</strong> {pool.solAmount}
+                            <br />
+                            <strong>USDC:</strong> {pool.usdcAmount}
+                            <br />
+                            <strong>CCC:</strong> {pool.cccAmount}
+                            <br />
+                          </td>
                           <td className="py-4 px-6">
                             {new Date(pool.createdAt * 1000).toDateString()}{" "}
                             {new Date(pool.createdAt * 1000).toTimeString()}
@@ -285,18 +306,17 @@ const Pool = () => {
                         </label>
                         <div className="grid gap-6 grid-cols-2">
                           <input
-                            type="text"
-                            id="pool_name"
+                            type="number"
+                            id="usdc_amount"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="0"
-
-                            // value={poolName}
-                            // onChange={onPoolNameChange}
+                            value={usdcAmount}
+                            onChange={onUsdcAmountChange}
                           />
                           <button
                             type="submit"
                             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            // onClick={() => initPool()}
+                            onClick={() => fundUsdc()}
                           >
                             Add
                           </button>

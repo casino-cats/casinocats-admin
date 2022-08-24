@@ -12,6 +12,8 @@ import {
   CASINOCATS_HOUSE_WALLET,
   CASINOCATS_PROGRAM_ID,
   CCC_MINT_DEVNET,
+  DECIMALS_PER_USDC,
+  findATA,
   USDC_MINT_DEVNET,
 } from "./common";
 import {
@@ -207,6 +209,31 @@ const createClient = ({
       console.log(txSig);
     },
 
+    fundUsdc: async ({ pool, amount }) => {
+      console.log(amount);
+      const usdcPubkey = new PublicKey(
+        "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU"
+      );
+      let usdcTokenAccount = await findATA(
+        usdcPubkey,
+        (program.provider as anchor.AnchorProvider).wallet.publicKey
+      );
+      const [usdcPot, usdcPotBump] = await findUsdcRewardPotPDA(pool);
+
+      const txSig = await program.methods
+        .fundUsdc(usdcPotBump, new anchor.BN(amount * DECIMALS_PER_USDC))
+        .accounts({
+          pool: pool,
+          usdcRewardPot: usdcPot,
+          usdcRewardSource: usdcTokenAccount,
+          usdcMint: new PublicKey(USDC_MINT_DEVNET),
+          manager: (program.provider as anchor.AnchorProvider).wallet.publicKey,
+          tokenProgram: TOKEN_PROGRAM_ID,
+        })
+        .rpc();
+      console.log(txSig);
+    },
+
     updatePool: async ({ pool, depositStartTs, depositEndTs, stakeEndTs }) => {
       const txSig = await program.methods
         .updatePool(depositStartTs, depositEndTs, stakeEndTs)
@@ -231,6 +258,8 @@ const createClient = ({
         stakeEndTs: pool.account.stakeEndTs.toNumber(),
         numberOfCats: pool.account.numberOfCats,
         solAmount: pool.account.amountOfSol.toNumber() / LAMPORTS_PER_SOL,
+        usdcAmount: pool.account.amountOfUsdc.toNumber() / DECIMALS_PER_USDC,
+        cccAmount: pool.account.amountOfCcc.toNumber() / 100,
         createdAt: pool.account.createdTs.toNumber(),
       }));
     },
