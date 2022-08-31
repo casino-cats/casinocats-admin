@@ -567,6 +567,26 @@ export type CasinocatsProgram = {
           isSigner: false;
         },
         {
+          name: "solPot";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcRewardPot";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcRewardDestination";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
           name: "tokenProgram";
           isMut: false;
           isSigner: false;
@@ -587,7 +607,16 @@ export type CasinocatsProgram = {
           isSigner: false;
         }
       ];
-      args: [];
+      args: [
+        {
+          name: "bumpSolPot";
+          type: "u8";
+        },
+        {
+          name: "bumpUsdcPot";
+          type: "u8";
+        }
+      ];
     }
   ];
   accounts: [
@@ -1317,6 +1346,26 @@ export const IDL: CasinocatsProgram = {
           isSigner: false,
         },
         {
+          name: "solPot",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcRewardPot",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcRewardDestination",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
           name: "tokenProgram",
           isMut: false,
           isSigner: false,
@@ -1337,7 +1386,16 @@ export const IDL: CasinocatsProgram = {
           isSigner: false,
         },
       ],
-      args: [],
+      args: [
+        {
+          name: "bumpSolPot",
+          type: "u8",
+        },
+        {
+          name: "bumpUsdcPot",
+          type: "u8",
+        },
+      ],
     },
   ],
   accounts: [
