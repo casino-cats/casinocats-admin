@@ -42,7 +42,7 @@ export const WalletWrapper: FC = () => {
 
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect={false}>
+      <WalletProvider wallets={wallets} autoConnect={true}>
         <WalletModalProvider>
           <Router />
         </WalletModalProvider>
