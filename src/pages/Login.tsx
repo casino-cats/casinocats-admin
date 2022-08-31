@@ -20,9 +20,9 @@ const Login = () => {
           signature: Buffer.from(signedMessage),
         });
         const accessToken = result.access_token;
-        await localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("accessToken", accessToken);
         const me = await getMe();
-        await localStorage.setItem("me", me);
+        localStorage.setItem("currentUser", JSON.stringify(me));
       }
     };
 
