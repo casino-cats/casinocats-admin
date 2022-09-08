@@ -19,7 +19,8 @@
     "casinocats",
     "keypair",
     "accs",
-    "signin"
+    "signin",
+    "xstate"
   ],
   "flagWords": []
 }
