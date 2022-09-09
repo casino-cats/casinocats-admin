@@ -1,10 +1,14 @@
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useActor } from "@xstate/react";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import * as AuthProvider from "../components/AuthProvider";
 import AddPool from "../pages/AddPool";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import NftList from "../pages/NftList";
 import Pool from "../pages/Pool";
+import { getNonce } from "../utils/lib/mutations";
 
 interface CurrentUserType {
   id: string;
@@ -27,45 +31,43 @@ export const AuthCtx = createContext<AuthInterface | null>(null);
 
 const Router = () => {
   const [isAuth, setIsAuth] = useState(false);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [currentUser, setCurrentUser] = useState<CurrentUserType | null>(null);
-  const authContext = useContext(AuthCtx);
-  console.log(authContext?.currentUser);
+  const { authService } = useContext(AuthProvider.Context);
+  const [authState, send] = useActor(authService);
+
+  const { publicKey } = useWallet();
 
   useEffect(() => {
-    console.log(authContext?.currentUser);
-    if (
-      authContext?.accessToken &&
-      authContext.currentUser?.role.includes("admin")
-    ) {
-      setIsAuth(true);
-    }
-  }, [
-    authContext?.accessToken,
-    authContext?.currentUser,
-    authContext?.currentUser?.role,
-  ]);
+    const login = async () => {
+      if (publicKey != null) {
+        const result = await getNonce({ publicKey: publicKey.toBase58() });
+        console.log({ result });
+        if (result.status === "success") {
+          send("AUTHORIZATION_SUCCEED");
+        }
+      } else {
+        send("LOGOUT");
+      }
+    };
+
+    login();
+  }, [publicKey, send]);
+
+  useEffect(() => {
+    const _isAuth = authState.matches("authorized");
+    setIsAuth(_isAuth);
+  }, [authState]);
 
   return (
     <div className="w-full h-full">
-      <AuthCtx.Provider
-        value={{
-          accessToken: accessToken,
-          currentUser: currentUser,
-          setAccessToken: setAccessToken,
-          setCurrentUser: setCurrentUser,
-        }}
-      >
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={isAuth ? <Dashboard /> : <Login />} />
-            <Route path="/pool" element={<Pool />} />
-            <Route path="/pool/add" element={<AddPool />} />
-            <Route path="/nft-list" element={<NftList />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthCtx.Provider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={isAuth ? <Dashboard /> : <Login />} />
+          <Route path="/pool" element={isAuth ? <Pool /> : <Login />} />
+          <Route path="/pool/add" element={isAuth ? <AddPool /> : <Login />} />
+          <Route path="/nft-list" element={isAuth ? <NftList /> : <Login />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };

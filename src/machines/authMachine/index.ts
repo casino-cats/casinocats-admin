@@ -7,19 +7,7 @@ export const authMachine = createMachine<null, AuthEventType, AuthStateType>({
   states: {
     disconnected: {
       on: {
-        CONNECT_BUTTON_CLICKED: "connecting",
-      },
-    },
-    connecting: {
-      on: {
-        WALLET_CONNECTED: "connected",
-        WALLET_DISCONNECTED: "disconnected",
-      },
-    },
-    connected: {
-      on: {
-        AUTHORIZATION_SUCCEEDED: "authorized",
-        AUTHORIZATION_FAILED: "disconnected",
+        AUTHORIZATION_SUCCEED: "authorized",
       },
     },
     authorized: {
