@@ -8,6 +8,7 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import NftList from "../pages/NftList";
 import Pool from "../pages/Pool";
+import Transaction from "../pages/Transaction";
 import { LOCAL_STORAGE_KEY } from "../utils/helper";
 import { auth, getMe, getNonce } from "../utils/lib/mutations";
 
@@ -85,6 +86,10 @@ const Router = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={isAuth ? <Dashboard /> : <Login />} />
+          <Route
+            path="/transaction"
+            element={isAuth ? <Transaction /> : <Login />}
+          />
           <Route path="/pool" element={isAuth ? <Pool /> : <Login />} />
           <Route path="/pool/add" element={isAuth ? <AddPool /> : <Login />} />
           <Route path="/nft-list" element={isAuth ? <NftList /> : <Login />} />

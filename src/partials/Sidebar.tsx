@@ -48,7 +48,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       </div>
       {/* Links */}
       <div className="space-y-8">
-        {/* Games */}
+        {/* GAME */}
         <div>
           <h3 className="text-xs uppercase text-gray-500 font-semibold pl-3">
             <span
@@ -79,6 +79,39 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </span>
               </NavLink>
             </li>
+            {/* staking pool */}
+            <li
+              className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
+                pathname === "/pool" && "bg-gray-900"
+              }`}
+            >
+              <NavLink
+                to="/transaction"
+                className={`block text-gray-200 hover:text-white truncate transition duration-150 ${
+                  pathname === "/transaction" && "hover:text-gray-200"
+                }`}
+              >
+                <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                  Transaction
+                </span>
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+        {/* STAKING */}
+        <div>
+          <h3 className="text-xs uppercase text-gray-500 font-semibold pl-3">
+            <span
+              className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
+              aria-hidden="true"
+            >
+              •••
+            </span>
+            <span className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+              STAKING
+            </span>
+          </h3>
+          <ul className="mt-3">
             {/* staking pool */}
             <li
               className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
