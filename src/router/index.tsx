@@ -8,7 +8,8 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import NftList from "../pages/NftList";
 import Pool from "../pages/Pool";
-import { getNonce } from "../utils/lib/mutations";
+import { LOCAL_STORAGE_KEY } from "../utils/helper";
+import { auth, getMe, getNonce } from "../utils/lib/mutations";
 
 interface CurrentUserType {
   id: string;
@@ -34,15 +35,37 @@ const Router = () => {
   const { authService } = useContext(AuthProvider.Context);
   const [authState, send] = useActor(authService);
 
-  const { publicKey } = useWallet();
+  const { publicKey, signMessage } = useWallet();
 
   useEffect(() => {
     const login = async () => {
       if (publicKey != null) {
         const result = await getNonce({ publicKey: publicKey.toBase58() });
-        console.log({ result });
         if (result.status === "success") {
-          send("AUTHORIZATION_SUCCEED");
+          const nonce = result.data.nonce;
+          const encodedMessage = new TextEncoder().encode(
+            "Authorize your wallet to play " + nonce
+          );
+          if (!signMessage) return;
+          const signedMessage = await signMessage(encodedMessage);
+          const signResult = await auth({
+            publicKey: publicKey.toBytes(),
+            signature: Buffer.from(signedMessage),
+          });
+          if (signResult.status === "success") {
+            await localStorage.setItem(
+              LOCAL_STORAGE_KEY.AccessToken,
+              signResult.data.accessToken
+            );
+            const authResult = await getMe();
+            console.log({ authResult });
+            if (authResult.status === "success") {
+              if (authResult.data.userInfo.role.includes("admin")) {
+                console.log("you are admin");
+                send("AUTHORIZATION_SUCCEED");
+              }
+            }
+          }
         }
       } else {
         send("LOGOUT");
@@ -50,7 +73,7 @@ const Router = () => {
     };
 
     login();
-  }, [publicKey, send]);
+  }, [publicKey, send, signMessage]);
 
   useEffect(() => {
     const _isAuth = authState.matches("authorized");

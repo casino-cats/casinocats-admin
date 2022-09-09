@@ -1,4 +1,3 @@
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import React, { useState } from "react";
 import Header from "../partials/Header";
 import Sidebar from "../partials/Sidebar";
