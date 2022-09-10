@@ -59,10 +59,8 @@ const Router = () => {
               signResult.data.accessToken
             );
             const authResult = await getMe();
-            console.log({ authResult });
             if (authResult.status === "success") {
               if (authResult.data.userInfo.role.includes("admin")) {
-                console.log("you are admin");
                 send("AUTHORIZATION_SUCCEED");
               }
             }

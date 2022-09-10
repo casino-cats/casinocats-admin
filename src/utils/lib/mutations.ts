@@ -11,3 +11,7 @@ export const getNonce = (body: { publicKey: string }) => {
 export const getMe = () => {
   return fetcher("user/me");
 };
+
+export const getAllTransactions = () => {
+  return fetcher("transaction/all");
+};
