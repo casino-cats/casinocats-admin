@@ -82,7 +82,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             {/* staking pool */}
             <li
               className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
-                pathname === "/pool" && "bg-gray-900"
+                pathname === "/transaction" && "bg-gray-900"
               }`}
             >
               <NavLink

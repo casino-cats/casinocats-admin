@@ -13,5 +13,5 @@ export const getMe = () => {
 };
 
 export const getAllTransactions = () => {
-  return fetcher("transaction/all");
+  return fetcher("admin/transaction/all");
 };

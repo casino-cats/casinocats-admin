@@ -58,6 +58,7 @@ const Router = () => {
               LOCAL_STORAGE_KEY.AccessToken,
               signResult.data.accessToken
             );
+            console.log(signResult.data.accessToken);
             const authResult = await getMe();
             if (authResult.status === "success") {
               if (authResult.data.userInfo.role.includes("admin")) {
