@@ -1,3 +1,5 @@
+export const SOLANA_EXPLORER_BASE_URL = "https://explorer.solana.com/tx/";
+
 export const COIN_TYPES = {
   SOL: 1,
   USDC: 2,
