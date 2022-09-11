@@ -4,6 +4,17 @@ export const COIN_TYPES = {
   CCC: 3,
 };
 
+export const TRANSACTION_TYPES = {
+  Deposit: 1,
+  Withdraw: 2,
+  CoinflipBet: 3,
+  CoinflipIncome: 4,
+  RouletteBet: 5,
+  RouletteIncome: 6,
+  CrashBet: 7,
+  CrashIncome: 8,
+};
+
 export const LOCAL_STORAGE_KEY = {
   AccessToken: "access_token",
 };

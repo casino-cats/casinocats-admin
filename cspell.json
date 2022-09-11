@@ -20,7 +20,8 @@
     "keypair",
     "accs",
     "signin",
-    "xstate"
+    "xstate",
+    "coinflip"
   ],
   "flagWords": []
 }

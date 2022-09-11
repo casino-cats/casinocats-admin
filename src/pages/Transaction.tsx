@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Header from "../partials/Header";
 import Sidebar from "../partials/Sidebar";
-import { coinTypeNumberToText } from "../utils/helper/transalator";
+import {
+  coinTypeNumberToText,
+  transactionTypeNumberToText,
+} from "../utils/helper/transalator";
 import { getAllTransactions } from "../utils/lib/mutations";
 import { TransactionType } from "../utils/types";
 
@@ -82,15 +85,19 @@ const Transaction = () => {
                   {transactionList?.map((transaction) => (
                     <tr className="bg-white border-b" key={transaction.id}>
                       <td className="py-4 px-6">
-                        {transaction.amount.toString() +
+                        {transaction.amount +
                           " " +
                           coinTypeNumberToText(transaction.coinType)}
                       </td>
                       <td className="py-y px-6">{transaction.createdAt}</td>
                       <td className="py-y px-6">{transaction.signature}</td>
-                      <td className="py-y px-6">{transaction.confirmed}</td>
+                      <td className="py-y px-6">
+                        {transaction.confirmed.toString()}
+                      </td>
                       <td className="py-y px-6">{transaction.user}</td>
-                      <td className="py-y px-6">{transaction.user}</td>
+                      <td className="py-y px-6">
+                        {transactionTypeNumberToText(transaction.type)}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
