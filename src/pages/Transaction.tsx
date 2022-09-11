@@ -90,6 +90,7 @@ const Transaction = () => {
                       <td className="py-y px-6">{transaction.signature}</td>
                       <td className="py-y px-6">{transaction.confirmed}</td>
                       <td className="py-y px-6">{transaction.user}</td>
+                      <td className="py-y px-6">{transaction.user}</td>
                     </tr>
                   ))}
                 </tbody>
