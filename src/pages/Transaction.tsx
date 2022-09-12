@@ -10,7 +10,7 @@ import {
   SOLANA_EXPLORER_BASE_URL,
   transactionTypeNumberToText,
 } from "../utils/helper";
-import { getAllTransactions } from "../utils/lib/mutations";
+import { confirmTransaction, getAllTransactions } from "../utils/lib/mutations";
 import { TransactionType } from "../utils/types";
 
 const Transaction = () => {
@@ -20,6 +20,16 @@ const Transaction = () => {
     useState<TransactionType>();
   const [showTransactionDetailModal, setShowTransactionDetailModal] =
     useState(false);
+
+  const confirm = async () => {
+    console.log(selectedTransaction?.id);
+    if (selectedTransaction) {
+      const result = await confirmTransaction({
+        transactionId: selectedTransaction?.id,
+      });
+      console.log(result);
+    }
+  };
 
   useEffect(() => {
     const getTransactions = async () => {
@@ -105,7 +115,9 @@ const Transaction = () => {
                         <ClipboardTruncateString original={transaction.id} />
                       </td>
                       <td className="py-4 px-6">
-                        <ClipboardTruncateString original={transaction.user} />
+                        <ClipboardTruncateString
+                          original={transaction.user.id}
+                        />
                       </td>
                       <td className="py-4 px-6">
                         {transaction.amount +
@@ -142,7 +154,7 @@ const Transaction = () => {
           {showTransactionDetailModal ? (
             <>
               <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <div className="relative w-auto my-6 mx-auto max-w-5xl">
+                <div className="relative w-auto my-6 mx-auto max-w-5xl border-gray-200 border-2 rounded-md`">
                   {/*content*/}
                   <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                     {/*header*/}
@@ -172,7 +184,7 @@ const Transaction = () => {
                             User
                           </label>
                           <label className="block mb-2 text-xs text-gray-700">
-                            {selectedTransaction?.user}
+                            {selectedTransaction?.user.id}
                           </label>
                         </div>
                         <div>
@@ -227,6 +239,13 @@ const Transaction = () => {
                     </div>
                     {/* footer */}
                     <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                      <button
+                        className="text-sky-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={confirm}
+                      >
+                        Confirm
+                      </button>
                       <button
                         className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"

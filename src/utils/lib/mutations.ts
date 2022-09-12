@@ -1,4 +1,4 @@
-import fetcher from "./fetcher";
+import { fetcher, patcher } from "./fetcher";
 
 export const auth = (body: { publicKey: Uint8Array; signature: Buffer }) => {
   return fetcher("auth/signin", body);
@@ -14,4 +14,8 @@ export const getMe = () => {
 
 export const getAllTransactions = () => {
   return fetcher("admin/transaction/all");
+};
+
+export const confirmTransaction = (body: { transactionId: string }) => {
+  return patcher("admin/transaction/confirm", body);
 };

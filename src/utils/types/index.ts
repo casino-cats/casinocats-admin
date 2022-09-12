@@ -6,6 +6,18 @@ export type TransactionType = {
   confirmedAt: string;
   signature: string;
   type: number;
-  user: string;
+  user: UserType;
   coinType: number;
+};
+
+export type UserType = {
+  id: string;
+  walletAddress: string;
+  username: string;
+  solBalance: number;
+  usdcBalance: number;
+  avatar: string;
+  level: number;
+  exp: number;
+  role: string;
 };
