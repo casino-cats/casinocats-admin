@@ -33,6 +33,8 @@ export const transactionTypeNumberToText = (
       return "Crash Bet";
     case TRANSACTION_TYPES.CrashIncome:
       return "Crash Income";
+    case TRANSACTION_TYPES.RedeemIncome:
+      return "Redeem Income";
     default:
       return "";
   }

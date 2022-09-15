@@ -15,6 +15,7 @@ export const TRANSACTION_TYPES = {
   RouletteIncome: 6,
   CrashBet: 7,
   CrashIncome: 8,
+  RedeemIncome: 9,
 };
 
 export const LOCAL_STORAGE_KEY = {

@@ -9,8 +9,6 @@ interface SignatureTruncateProps {
 const SignatureTruncate = (props: SignatureTruncateProps) => {
   const [isShow, setIsShow] = useState(false);
 
-  console.log(process.env.REACT_APP_SOLANA_NETWORK);
-
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(props.tx);
   };

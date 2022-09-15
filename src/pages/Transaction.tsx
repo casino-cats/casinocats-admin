@@ -126,7 +126,9 @@ const Transaction = () => {
                       </td>
                       <td className="py-4 px-6">{transaction.createdAt}</td>
                       <td className="py-4 px-6">
-                        <SignatureTruncate tx={transaction.signature} />
+                        {transaction.signature && (
+                          <SignatureTruncate tx={transaction.signature} />
+                        )}
                       </td>
                       <td className="py-4 px-6">
                         {transaction.confirmed.toString()}
@@ -167,7 +169,7 @@ const Transaction = () => {
                     <div className="relative p-6 flex-auto">
                       <div className="grid gap-6 mb-6">
                         <div>
-                          {/* pool name */}
+                          {/* Transaction ID */}
                           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
                             Transaction ID
                           </label>
