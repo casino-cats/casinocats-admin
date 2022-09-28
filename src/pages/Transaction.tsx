@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { CgMoreVerticalAlt } from "react-icons/cg";
 import ClipboardTruncateString from "../components/ClipboardTruncateString";
 import SignatureTruncate from "../components/SignatureTruncate";
-import Header from "../partials/Header";
 import Sidebar from "../partials/Sidebar";
 import {
   coinTypeNumberToText,
@@ -14,7 +13,6 @@ import { confirmTransaction, getAllTransactions } from "../utils/lib/mutations";
 import { TransactionType } from "../utils/types";
 
 const Transaction = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [transactionList, setTransactionList] = useState<TransactionType[]>([]);
   const [selectedTransaction, setSelectedTransaction] =
     useState<TransactionType>();
@@ -43,13 +41,10 @@ const Transaction = () => {
   }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+    <div className="flex h-[calc(100vh-65px)] overflow-hidden">
+      <Sidebar />
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-auto">
-        <Header />
-
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="mb-4 sm:mb-0">
@@ -57,16 +52,6 @@ const Transaction = () => {
                 Transactions ✨
               </h1>
             </div>
-            {/* <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-              <NavLink
-                to="/pool/add"
-                className={`block text-gray-200 hover:text-white truncate transition duration-150  p-2 `}
-              >
-                <span className="btn bg-indigo-500 hover:bg-indigo-600 text-white p-2">
-                  <span className="xs:block ml-2"> + Add Pool</span>
-                </span>
-              </NavLink>
-            </div> */}
 
             <div className="bg-white shadow-lg rounded-sm border border-gray-200 relative mt-6">
               <header className="px-5 py-4">

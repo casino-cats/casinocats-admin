@@ -1,7 +1,7 @@
 import { LOCAL_STORAGE_KEY } from "../helper";
 
-// const API_URL = "http://localhost:3333";
-const API_URL = "https://cats-dev-api.up.railway.app";
+const API_URL = "http://localhost:3333";
+// const API_URL = "https://cats-dev-api.up.railway.app";
 
 export const fetcher = (url: string, data: any = undefined) => {
   const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY.AccessToken);

@@ -20,4 +20,5 @@ export const TRANSACTION_TYPES = {
 
 export const LOCAL_STORAGE_KEY = {
   AccessToken: "access_token",
+  AdminInfo: "admin_info",
 };
