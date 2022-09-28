@@ -12,12 +12,9 @@ const Router = () => {
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    const checkAuthState = async () => {
-      const accessToken = await localStorage.getItem(
-        LOCAL_STORAGE_KEY.AccessToken
-      );
-      const adminInfo = await localStorage.getItem(LOCAL_STORAGE_KEY.AdminInfo);
-      console.log(JSON.parse(adminInfo!));
+    const checkAuthState = () => {
+      const accessToken = localStorage.getItem(LOCAL_STORAGE_KEY.AccessToken);
+      const adminInfo = localStorage.getItem(LOCAL_STORAGE_KEY.AdminInfo);
       if (accessToken && adminInfo) {
         if (JSON.parse(adminInfo).role.includes("admin")) {
           setIsAuth(true);

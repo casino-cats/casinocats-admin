@@ -74,50 +74,19 @@ const Sidebar = () => {
             {/* dashboard */}
             <li>
               <a
-                href="/"
+                href="/pool"
                 className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg hover:bg-gray-700"
               >
-                <AiFillDashboard /> <span className="ml-3">Dashboard</span>
+                <AiFillDashboard /> <span className="ml-3">Pool</span>
               </a>
             </li>
             <li>
-              <button
-                type="button"
-                className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg w-full hover:bg-gray-700 transition duration-75 group"
-                onClick={() => {
-                  setIsTransactionsDropdownShowing(
-                    !isTransactionsDropdownShowing
-                  );
-                }}
+              <a
+                href="/nft-list"
+                className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg hover:bg-gray-700"
               >
-                <AiTwotoneMoneyCollect />
-                <span className="flex-1 ml-3 text-left">Transactions</span>
-                {isTransactionsDropdownShowing ? (
-                  <AiOutlineUp className="w-3 h-3" />
-                ) : (
-                  <AiOutlineDown className="w-3 h-3" />
-                )}
-              </button>
-              {isTransactionsDropdownShowing && (
-                <ul>
-                  <li>
-                    <a
-                      href="/transaction"
-                      className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
-                    >
-                      Deposit/Withdraw
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/transaction"
-                      className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
-                    >
-                      Redeem
-                    </a>
-                  </li>
-                </ul>
-              )}
+                <AiFillDashboard /> <span className="ml-3">NftList</span>
+              </a>
             </li>
           </ul>
         </div>

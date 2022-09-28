@@ -1,17 +1,13 @@
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useActor } from "@xstate/react";
-import { useContext, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import * as AuthProvider from "../components/AuthProvider";
+import { useNavigate } from "react-router-dom";
 import LogoPng from "../images/logo.png";
 import { LOCAL_STORAGE_KEY } from "../utils/helper";
 import { auth, getMe, getNonce } from "../utils/lib/mutations";
 
 const Login = () => {
-  const { authService } = useContext(AuthProvider.Context);
-  const [authState, send] = useActor(authService);
-  const { isAuth } = authState.context;
   const { publicKey, signMessage } = useWallet();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!publicKey) {
@@ -34,19 +30,18 @@ const Login = () => {
           signature: Buffer.from(signedMessage),
         });
         if (signResult.status === "success") {
-          await localStorage.setItem(
+          localStorage.setItem(
             LOCAL_STORAGE_KEY.AccessToken,
             signResult.data.accessToken
           );
           console.log(signResult.data.accessToken);
           const authResult = await getMe();
-          console.log({ authResult });
           if (authResult.data.user.role.includes("admin")) {
-            await localStorage.setItem(
+            localStorage.setItem(
               LOCAL_STORAGE_KEY.AdminInfo,
               JSON.stringify(authResult.data.user)
             );
-            send("AUTHORIZATION_SUCCEED");
+            navigate("/");
           } else {
             toast("You are not admin");
           }
