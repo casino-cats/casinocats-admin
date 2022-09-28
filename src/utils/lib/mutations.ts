@@ -16,6 +16,10 @@ export const getAllTransactions = () => {
   return fetcher("admin/transaction/all");
 };
 
+export const getAllDepositTransactions = () => {
+  return fetcher("admin/transaction/deposit-list");
+};
+
 export const confirmTransaction = (body: { transactionId: string }) => {
   return patcher("admin/transaction/confirm", body);
 };

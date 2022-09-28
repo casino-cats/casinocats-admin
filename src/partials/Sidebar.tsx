@@ -50,10 +50,18 @@ const Sidebar = () => {
                 <ul>
                   <li>
                     <a
-                      href="/transaction"
+                      href="/transaction/deposit"
                       className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
                     >
-                      Deposit/Withdraw
+                      Deposit
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/transaction/withdraw"
+                      className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
+                    >
+                      Withdraw
                     </a>
                   </li>
                   <li>

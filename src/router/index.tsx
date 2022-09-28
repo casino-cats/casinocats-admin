@@ -5,7 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import NftList from "../pages/NftList";
 import Pool from "../pages/Pool";
-import Transaction from "../pages/Transaction";
+import DepositList from "../pages/DepositList";
 import { LOCAL_STORAGE_KEY } from "../utils/helper";
 
 const Router = () => {
@@ -29,7 +29,7 @@ const Router = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/transaction" element={<Transaction />} />
+          <Route path="/transaction/deposit" element={<DepositList />} />
           <Route path="/pool" element={<Pool />} />
           <Route path="/nft-list" element={<NftList />} />
           <Route path="/login" element={<Login />} />
