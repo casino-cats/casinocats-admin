@@ -1,48 +1,59 @@
 import React, { useEffect, useState } from "react";
-// import { NavLink } from "react-router-dom";
-import { CgMoreVerticalAlt } from "react-icons/cg";
-import ClipboardTruncateString from "../components/ClipboardTruncateString";
-import SignatureTruncate from "../components/SignatureTruncate";
+import toast, { Toaster } from "react-hot-toast";
 import Sidebar from "../partials/Sidebar";
 import {
   coinTypeNumberToText,
   SOLANA_EXPLORER_BASE_URL,
-  transactionTypeNumberToText,
   truncateString,
 } from "../utils/helper";
 import {
   confirmTransaction,
   getAllDepositTransactions,
-  getAllTransactions,
 } from "../utils/lib/mutations";
-import { DepositTransactionType, TransactionType } from "../utils/types";
+import { DepositTransactionType } from "../utils/types";
+import { CgClipboard } from "react-icons/cg";
 
 const DepositList = () => {
   const [transactionList, setTransactionList] = useState<
     DepositTransactionType[]
   >([]);
   const [selectedTransaction, setSelectedTransaction] =
-    useState<TransactionType>();
+    useState<DepositTransactionType>();
   const [showTransactionDetailModal, setShowTransactionDetailModal] =
     useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const confirm = async () => {
+  const handleApprove = async () => {
+    setIsLoading(true);
     if (selectedTransaction) {
-      const result = await confirmTransaction({
-        transactionId: selectedTransaction?.id,
+      const approveResult = await confirmTransaction({
+        transactionId: selectedTransaction.id,
       });
-      console.log(result);
+      if (approveResult.status === "success") {
+        selectedTransaction.approved = true;
+        const index = transactionList.findIndex(
+          (item) => item.id === selectedTransaction.id
+        );
+        transactionList[index].approved = true;
+        transactionList[index].approvedAt =
+          approveResult.data.transaction.approvedAt;
+        toast.success(approveResult.data.transaction.id + "is approved");
+      } else {
+        toast.error(approveResult.msg);
+      }
+    } else {
+      toast.error("Select a transaction to approve.");
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    const getTransactions = async () => {
+    (async () => {
       const _transactionList = await getAllDepositTransactions();
       if (_transactionList.status === "success") {
         setTransactionList(_transactionList.data.transactionList);
       }
-    };
-    getTransactions();
+    })();
   }, []);
 
   return (
@@ -169,7 +180,7 @@ const DepositList = () => {
               {transactionList.map((transaction) => {
                 return (
                   <tr
-                    className="h-20 text-sm leading-none text-gray-700 border-b border-t border-gray-200 bg-white hover-bg-gray-100"
+                    className="h-20 text-sm leading-none text-gray-700 border-b border-t border-gray-200 bg-white hover:bg-gray-100"
                     key={transaction.id}
                   >
                     <td className="pl-4">
@@ -207,7 +218,13 @@ const DepositList = () => {
                       )}
                     </td>
                     <td className="pl-4">
-                      <button className="bg-gray-100 mr-3 hover:bg-gray-200 py-2.5 px-5 rounded text-sm leading-3 text-gray-500 focus:outline-none">
+                      <button
+                        className="bg-gray-100 mr-3 hover:bg-gray-200 py-2.5 px-5 rounded text-sm leading-3 text-gray-500 focus:outline-none"
+                        onClick={() => {
+                          setSelectedTransaction(transaction);
+                          setShowTransactionDetailModal(true);
+                        }}
+                      >
                         Details
                       </button>
                     </td>
@@ -218,6 +235,150 @@ const DepositList = () => {
           </table>
         </div>
       </div>
+      {showTransactionDetailModal && (
+        <div className="bg-gray-700 bg-opacity-50 absolute w-full h-[calc(100vh-65px)] py-8">
+          <div className="flex items-center justify-center px-4 h-[calc(100vh-65px)] w-full relative">
+            <div className="fixed overflow-y-auto w-11/12 h-[calc(100vh-65px)] py-10 max-w-lg">
+              <div className="bg-white rounded-md relative">
+                <div
+                  onClick={() => {
+                    setShowTransactionDetailModal(false);
+                  }}
+                  className="absolute inset-0 m-auto w-5 h-5 mr-4 mt-4 cursor-pointer"
+                ></div>
+                <div className="bg-gray-100 rounded-tl-md rounded-tr-md md:px-10 px-5 pt-9 pb-2.5">
+                  <div>
+                    <div className="flex justify-between items-center">
+                      <p className="text-lg font-bold text-gray-500 mt-2">
+                        {selectedTransaction?.id}
+                      </p>
+                      {selectedTransaction?.approved ? (
+                        <div className="w-20 h-6 flex items-center justify-center bg-blue-50 rounded-full">
+                          <p className="text-xs leading-3 text-blue-500">
+                            Approved
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="w-20 h-6 flex items-center justify-center bg-yellow-50 rounded-full">
+                          <p className="text-xs leading-3 text-yellow-600">
+                            Pending
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                    <div className="mt-2">
+                      <p className="text-xs font-semibold leading-3 text-gray-800 uppercase">
+                        Depositor
+                      </p>
+                      <p className="text-xs leading-4 text-gray-500 uppercase mt-1">
+                        <b>ID:</b> {selectedTransaction?.user.id}
+                        <br />
+                        <b>Wallet Address:</b>{" "}
+                        {selectedTransaction?.user.username}
+                        <br />
+                        <b>User Name:</b> {selectedTransaction?.user.username}
+                        <br />
+                        <b>Balance:</b> {selectedTransaction?.user.solBalance}{" "}
+                        SOL | {selectedTransaction?.user.usdcBalance} USDC
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="pt-3.5 pb-9 px-10">
+                  <div className="w-full overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="text-xs leading-none text-gray-500 border-b border-gray-200 text-left">
+                        <tr>
+                          <th className="pb-2">Date/Time</th>
+                          <th className="pb-2">Coin Type</th>
+                          <th className="pb-2">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="text-xs leading-3 text-gray-800 text-left border-b border-gray-200">
+                          <td className="py-4 w-1/2">
+                            {selectedTransaction?.createdAt}
+                          </td>
+                          <td className="py-4">
+                            {selectedTransaction?.coinType &&
+                              coinTypeNumberToText(
+                                selectedTransaction?.coinType
+                              )}
+                          </td>
+                          <td className="py-4">
+                            {selectedTransaction?.amount}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="mt-9">
+                    <div className="flex">
+                      <p className="text-xs leading-4 text-gray-500 break-all">
+                        {selectedTransaction?.signature}
+                      </p>
+                      <button
+                        type="button"
+                        className="inline-flex items-center text-sm mx-1 hover:text-teal-500"
+                        onClick={() => {
+                          window.open(
+                            SOLANA_EXPLORER_BASE_URL +
+                              selectedTransaction?.signature +
+                              "?cluster=devnet",
+                            "_blank"
+                          );
+                        }}
+                      >
+                        <CgClipboard />
+                      </button>
+                    </div>
+                    <div className="flex items-center justify-between mt-8">
+                      <button
+                        onClick={() => {
+                          setShowTransactionDetailModal(false);
+                        }}
+                        className="px-6 py-3 bg-gray-400 hover:bg-gray-500 shadow rounded text-sm text-white"
+                      >
+                        Close
+                      </button>
+                      <button
+                        className="px-6 py-3 bg-indigo-700 hover:bg-opacity-80 shadow rounded text-sm text-white"
+                        onClick={() => {
+                          handleApprove();
+                        }}
+                      >
+                        Approve
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {isLoading && (
+        <div className="flex items-center justify-center bg-gray-700 bg-opacity-50 absolute w-full h-[calc(100vh-65px)]">
+          <svg
+            aria-hidden="true"
+            className="mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill"
+            />
+          </svg>{" "}
+          Processing
+        </div>
+      )}
+      <Toaster position="bottom-center" />
     </div>
   );
 };

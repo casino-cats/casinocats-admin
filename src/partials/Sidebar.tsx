@@ -6,7 +6,6 @@ import {
   AiOutlineDown,
   AiOutlineUp,
 } from "react-icons/ai";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const Sidebar = () => {
   const location = useLocation();
