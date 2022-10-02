@@ -16,8 +16,8 @@ export const getAllTransactions = () => {
   return fetcher("admin/transaction/all");
 };
 
-export const getAllDepositTransactions = () => {
-  return fetcher("admin/transaction/deposit-list");
+export const getDepositList = (body?: { skip: number; take: number }) => {
+  return fetcher("admin/transaction/deposit-list", body);
 };
 
 export const confirmTransaction = (body: { transactionId: string }) => {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   AiFillDashboard,
   AiTwotoneMoneyCollect,
@@ -20,12 +20,12 @@ const Sidebar = () => {
           <ul className="space-y-2 mt-6">
             {/* dashboard */}
             <li>
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg hover:bg-gray-700"
               >
                 <AiFillDashboard /> <span className="ml-3">Dashboard</span>
-              </a>
+              </Link>
             </li>
             <li>
               <button
@@ -48,12 +48,12 @@ const Sidebar = () => {
               {isTransactionsDropdownShowing && (
                 <ul>
                   <li>
-                    <a
-                      href="/transaction/deposit"
+                    <Link
+                      to="/transaction/deposit"
                       className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
                     >
                       Deposit
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <a
@@ -64,12 +64,12 @@ const Sidebar = () => {
                     </a>
                   </li>
                   <li>
-                    <a
-                      href="/transaction"
+                    <Link
+                      to="/transaction"
                       className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
                     >
                       Redeem
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               )}
@@ -80,20 +80,20 @@ const Sidebar = () => {
           <ul className="space-y-2 mt-4">
             {/* dashboard */}
             <li>
-              <a
-                href="/pool"
+              <Link
+                to="/pool"
                 className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg hover:bg-gray-700"
               >
                 <AiFillDashboard /> <span className="ml-3">Pool</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/nft-list"
+              <Link
+                to="/nft-list"
                 className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg hover:bg-gray-700"
               >
                 <AiFillDashboard /> <span className="ml-3">NftList</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

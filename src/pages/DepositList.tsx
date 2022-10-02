@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import Pagination from "@mui/material/Pagination";
 import Sidebar from "../partials/Sidebar";
 import {
   coinTypeNumberToText,
   SOLANA_EXPLORER_BASE_URL,
   truncateString,
 } from "../utils/helper";
-import {
-  confirmTransaction,
-  getAllDepositTransactions,
-} from "../utils/lib/mutations";
+import { confirmTransaction, getDepositList } from "../utils/lib/mutations";
 import { DepositTransactionType } from "../utils/types";
 import { CgClipboard } from "react-icons/cg";
 
@@ -22,6 +20,22 @@ const DepositList = () => {
   const [showTransactionDetailModal, setShowTransactionDetailModal] =
     useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [pageCount, setPageCount] = useState(0);
+
+  const handlePaginationChange = async (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    const skip = (value - 1) * 10;
+    console.log(skip);
+    const _transactionList = await getDepositList({ skip: skip, take: 10 });
+    console.log(_transactionList.data);
+    if (_transactionList.status === "success") {
+      setTransactionList(_transactionList.data.depositList);
+    } else {
+      toast.error(_transactionList.data.msg);
+    }
+  };
 
   const handleApprove = async () => {
     setIsLoading(true);
@@ -49,9 +63,10 @@ const DepositList = () => {
 
   useEffect(() => {
     (async () => {
-      const _transactionList = await getAllDepositTransactions();
+      const _transactionList = await getDepositList({ skip: 0, take: 10 });
       if (_transactionList.status === "success") {
-        setTransactionList(_transactionList.data.transactionList);
+        setTransactionList(_transactionList.data.depositList);
+        setPageCount(Math.ceil(_transactionList.data.depositListLength / 10));
       }
     })();
   }, []);
@@ -60,7 +75,7 @@ const DepositList = () => {
     <div className="flex h-[calc(100vh-65px)] overflow-hidden">
       <Sidebar />
       {/* Content area */}
-      <div className="sm:px-6 w-full">
+      <div className="sm:px-6 w-full overflow-auto">
         <div className="px-4 md:px-10 py-4 md:py-7">
           <div className="lg:flex items-center justify-between">
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800">
@@ -164,7 +179,7 @@ const DepositList = () => {
             </div>
           </div>
         </div>
-        <div className="bg-white px-4 md:px-8 xl:px-10 overflow-x-auto">
+        <div className="bg-white px-4 md:px-8 xl:px-10 overflow-auto">
           <table className="w-full whitespace-nowrap">
             <thead>
               <tr className="h-20 w-full text-sm leading-none text-gray-600">
@@ -233,6 +248,14 @@ const DepositList = () => {
               })}
             </tbody>
           </table>
+        </div>
+        <div className="flex justify-center mt-2 mb-2">
+          <Pagination
+            count={pageCount}
+            variant="outlined"
+            color="secondary"
+            onChange={handlePaginationChange}
+          />
         </div>
       </div>
       {showTransactionDetailModal && (

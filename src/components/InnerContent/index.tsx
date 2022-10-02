@@ -1,12 +1,7 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 
 const InnerContent = () => {
-  return (
-    <div>
-      <Outlet />
-    </div>
-  );
+  return <Outlet />;
 };
 
 export default InnerContent;

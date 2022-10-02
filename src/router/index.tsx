@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import NftList from "../pages/NftList";
@@ -10,20 +10,18 @@ import ProtectedRoutes from "../components/ProtectedRoutes";
 const Router = () => {
   return (
     <div className="w-full h-full">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<ProtectedRoutes />}>
-            <Route path="/" element={<InnerContent />}>
-              <Route path="/" element={<Navigate replace to="dashboard" />} />
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="transaction/deposit" element={<DepositList />} />
-              <Route path="pool" element={<Pool />} />
-              <Route path="nft-list" element={<NftList />} />
-            </Route>
+      <Routes>
+        <Route path="/" element={<ProtectedRoutes />}>
+          <Route path="/" element={<InnerContent />}>
+            <Route path="/" element={<Navigate replace to="dashboard" />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="transaction/deposit" element={<DepositList />} />
+            <Route path="pool" element={<Pool />} />
+            <Route path="nft-list" element={<NftList />} />
           </Route>
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
+        </Route>
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </div>
   );
 };
