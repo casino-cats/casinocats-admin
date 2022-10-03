@@ -45,3 +45,14 @@ export type UserType = {
   role: string;
   isPrivate: boolean;
 };
+
+export type RedemptionType = {
+  round: number;
+  coinType: number;
+  amount: number;
+  code: string;
+  redeemed: boolean;
+  createdAt: string;
+  redeemedAt: string | null;
+  userId: string | null;
+};

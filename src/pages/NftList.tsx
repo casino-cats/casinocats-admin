@@ -7,7 +7,6 @@ import { NftListType } from "../utils/client/types/clientType";
 import useClient from "../utils/hooks/useClient";
 
 const NftList = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [collectionName, setCollectionName] = useState("");

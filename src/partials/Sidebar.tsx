@@ -5,7 +5,10 @@ import {
   AiTwotoneMoneyCollect,
   AiOutlineDown,
   AiOutlineUp,
+  AiFillHeart,
+  AiOutlineContainer,
 } from "react-icons/ai";
+import { BsCardList } from "react-icons/bs";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -27,6 +30,7 @@ const Sidebar = () => {
                 <AiFillDashboard /> <span className="ml-3">Dashboard</span>
               </Link>
             </li>
+            {/* transaction */}
             <li>
               <button
                 type="button"
@@ -63,16 +67,17 @@ const Sidebar = () => {
                       Withdraw
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      to="/transaction"
-                      className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
-                    >
-                      Redeem
-                    </Link>
-                  </li>
                 </ul>
               )}
+            </li>
+            <li>
+              <Link
+                to="/redemption"
+                className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
+              >
+                <AiFillHeart />
+                <span className="ml-3">Redemption</span>
+              </Link>
             </li>
           </ul>
           <div className="border-b border-gray-400 w-full mt-6" />
@@ -84,7 +89,7 @@ const Sidebar = () => {
                 to="/pool"
                 className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg hover:bg-gray-700"
               >
-                <AiFillDashboard /> <span className="ml-3">Pool</span>
+                <AiOutlineContainer /> <span className="ml-3">Pool</span>
               </Link>
             </li>
             <li>
@@ -92,7 +97,7 @@ const Sidebar = () => {
                 to="/nft-list"
                 className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg hover:bg-gray-700"
               >
-                <AiFillDashboard /> <span className="ml-3">NftList</span>
+                <BsCardList /> <span className="ml-3">NftList</span>
               </Link>
             </li>
           </ul>

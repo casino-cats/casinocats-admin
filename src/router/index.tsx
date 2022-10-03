@@ -7,6 +7,7 @@ import DepositList from "../pages/transaction/DepositList";
 import InnerContent from "../components/InnerContent";
 import ProtectedRoutes from "../components/ProtectedRoutes";
 import WithdrawList from "../pages/transaction/WithdrawList";
+import RedemptionList from "../pages/RedemptionList";
 
 const Router = () => {
   return (
@@ -18,6 +19,7 @@ const Router = () => {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="/transaction/deposit" element={<DepositList />} />
             <Route path="/transaction/withdraw" element={<WithdrawList />} />
+            <Route path="/redemption" element={<RedemptionList />} />
             <Route path="pool" element={<Pool />} />
             <Route path="nft-list" element={<NftList />} />
           </Route>

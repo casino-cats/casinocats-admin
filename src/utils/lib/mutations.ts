@@ -30,3 +30,16 @@ export const confirmTransaction = (body: {
 }) => {
   return patcher("admin/transaction/confirm", body);
 };
+
+export const generateRedemptions = (body: {
+  supply: number;
+  coinType: number;
+  minAmount: number;
+  maxAmount: number;
+}) => {
+  return fetcher("admin/redemption/generate", body);
+};
+
+export const getRedemptionListGroupedByRound = () => {
+  return fetcher("admin/redemption/get-grouped-by-round");
+};
