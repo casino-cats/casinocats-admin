@@ -8,6 +8,7 @@ import {
   AiFillHeart,
   AiOutlineContainer,
 } from "react-icons/ai";
+import { FaUserAlt } from "react-icons/fa";
 import { BsCardList } from "react-icons/bs";
 
 const Sidebar = () => {
@@ -28,6 +29,15 @@ const Sidebar = () => {
                 className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg hover:bg-gray-700"
               >
                 <AiFillDashboard /> <span className="ml-3">Dashboard</span>
+              </Link>
+            </li>
+            {/* user */}
+            <li>
+              <Link
+                to="/user"
+                className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg hover:bg-gray-700"
+              >
+                <FaUserAlt /> <span className="ml-3">User</span>
               </Link>
             </li>
             {/* transaction */}

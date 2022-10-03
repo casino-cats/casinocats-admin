@@ -8,6 +8,8 @@ import InnerContent from "../components/InnerContent";
 import ProtectedRoutes from "../components/ProtectedRoutes";
 import WithdrawList from "../pages/transaction/WithdrawList";
 import RedemptionList from "../pages/RedemptionList";
+import User from "../pages/User";
+import AddPool from "../pages/AddPool";
 
 const Router = () => {
   return (
@@ -17,10 +19,12 @@ const Router = () => {
           <Route path="/" element={<InnerContent />}>
             <Route path="/" element={<Navigate replace to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="/transaction/deposit" element={<DepositList />} />
-            <Route path="/transaction/withdraw" element={<WithdrawList />} />
-            <Route path="/redemption" element={<RedemptionList />} />
+            <Route path="user" element={<User />} />
+            <Route path="transaction/deposit" element={<DepositList />} />
+            <Route path="transaction/withdraw" element={<WithdrawList />} />
+            <Route path="redemption" element={<RedemptionList />} />
             <Route path="pool" element={<Pool />} />
+            <Route path="pool/add" element={<AddPool />} />
             <Route path="nft-list" element={<NftList />} />
           </Route>
         </Route>

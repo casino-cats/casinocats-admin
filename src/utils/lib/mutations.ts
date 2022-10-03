@@ -12,6 +12,10 @@ export const getMe = () => {
   return fetcher("user/me");
 };
 
+export const getAllUsers = () => {
+  return fetcher("admin/user/all");
+};
+
 export const getAllTransactions = () => {
   return fetcher("admin/transaction/all");
 };
