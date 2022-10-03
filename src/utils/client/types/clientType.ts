@@ -22,6 +22,22 @@ type NftListType = {
 type ClientType = {
   depositSol: () => Promise<any>;
 
+  withdrawSol: ({
+    destination,
+    amount,
+  }: {
+    destination: string;
+    amount: number;
+  }) => Promise<any>;
+
+  withdrawUsdc: ({
+    destination,
+    amount,
+  }: {
+    destination: string;
+    amount: number;
+  }) => Promise<any>;
+
   createNftList: ({
     numberOfNfts,
     collectionName,

@@ -56,12 +56,12 @@ const Sidebar = () => {
                     </Link>
                   </li>
                   <li>
-                    <a
-                      href="/transaction/withdraw"
+                    <Link
+                      to="/transaction/withdraw"
                       className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
                     >
                       Withdraw
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <Link

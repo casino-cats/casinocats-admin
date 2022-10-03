@@ -21,6 +21,16 @@ export type DepositTransactionType = {
   approvedAt: string;
 };
 
+export type WithdrawTransactionType = {
+  id: string;
+  user: UserType;
+  coinType: number;
+  amount: number;
+  approved: boolean;
+  createdAt: string;
+  approvedAt: string;
+};
+
 export type UserType = {
   id: string;
   walletAddress: string;

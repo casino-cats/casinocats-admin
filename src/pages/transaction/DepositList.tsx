@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Pagination from "@mui/material/Pagination";
-import Sidebar from "../partials/Sidebar";
+import Sidebar from "../../partials/Sidebar";
 import {
   coinTypeNumberToText,
   SOLANA_EXPLORER_BASE_URL,
   truncateString,
-} from "../utils/helper";
-import { confirmTransaction, getDepositList } from "../utils/lib/mutations";
-import { DepositTransactionType } from "../utils/types";
+} from "../../utils/helper";
+import { confirmTransaction, getDepositList } from "../../utils/lib/mutations";
+import { DepositTransactionType } from "../../utils/types";
 import { CgClipboard } from "react-icons/cg";
 
 const DepositList = () => {
@@ -27,9 +27,7 @@ const DepositList = () => {
     value: number
   ) => {
     const skip = (value - 1) * 10;
-    console.log(skip);
     const _transactionList = await getDepositList({ skip: skip, take: 10 });
-    console.log(_transactionList.data);
     if (_transactionList.status === "success") {
       setTransactionList(_transactionList.data.depositList);
     } else {

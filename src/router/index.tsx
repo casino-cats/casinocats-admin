@@ -3,9 +3,10 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import NftList from "../pages/NftList";
 import Pool from "../pages/Pool";
-import DepositList from "../pages/DepositList";
+import DepositList from "../pages/transaction/DepositList";
 import InnerContent from "../components/InnerContent";
 import ProtectedRoutes from "../components/ProtectedRoutes";
+import WithdrawList from "../pages/transaction/WithdrawList";
 
 const Router = () => {
   return (
@@ -15,7 +16,8 @@ const Router = () => {
           <Route path="/" element={<InnerContent />}>
             <Route path="/" element={<Navigate replace to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="transaction/deposit" element={<DepositList />} />
+            <Route path="/transaction/deposit" element={<DepositList />} />
+            <Route path="/transaction/withdraw" element={<WithdrawList />} />
             <Route path="pool" element={<Pool />} />
             <Route path="nft-list" element={<NftList />} />
           </Route>
