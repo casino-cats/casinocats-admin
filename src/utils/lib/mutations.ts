@@ -12,6 +12,10 @@ export const getMe = () => {
   return fetcher("user/me");
 };
 
+export const getDashboardData = () => {
+  return fetcher("admin/dashboard");
+};
+
 export const getAllUsers = () => {
   return fetcher("admin/user/all");
 };
