@@ -4,8 +4,11 @@ import { useNavigate } from "react-router-dom";
 import LogoPng from "../images/logo.png";
 import { LOCAL_STORAGE_KEY } from "../utils/helper";
 import { auth, getMe, getNonce } from "../utils/lib/mutations";
+import { useStoreActions } from "../store/hooks";
 
 const Login = () => {
+  const { setUser } = useStoreActions((actions) => actions.userModel);
+
   const { publicKey, signMessage } = useWallet();
   const navigate = useNavigate();
 
@@ -30,6 +33,7 @@ const Login = () => {
           signature: Buffer.from(signedMessage),
         });
         if (signResult.status === "success") {
+          // setUser({ authToken: signResult.data.accessToken });
           localStorage.setItem(
             LOCAL_STORAGE_KEY.AccessToken,
             signResult.data.accessToken
@@ -37,10 +41,14 @@ const Login = () => {
           console.log(signResult.data.accessToken);
           const authResult = await getMe();
           if (authResult.data.user.role.includes("admin")) {
-            localStorage.setItem(
-              LOCAL_STORAGE_KEY.AdminInfo,
-              JSON.stringify(authResult.data.user)
-            );
+            // localStorage.setItem(
+            //   LOCAL_STORAGE_KEY.AdminInfo,
+            //   JSON.stringify(authResult.data.user)
+            // );
+            setUser({
+              userName: authResult.data.user.userName,
+              role: authResult.data.user.role,
+            });
             navigate("/");
           } else {
             toast("You are not admin");

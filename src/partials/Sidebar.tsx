@@ -14,7 +14,7 @@ import { BsCardList } from "react-icons/bs";
 const Sidebar = () => {
   const location = useLocation();
   const [isTransactionsDropdownShowing, setIsTransactionsDropdownShowing] =
-    useState(false);
+    useState(true);
   const { pathname } = location;
 
   return (

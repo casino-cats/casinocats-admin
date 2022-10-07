@@ -71,6 +71,7 @@ const Dashboard = () => {
       {/* Content area */}
       <div className="w-full p-4">
         <div className="w-full mt-4">
+          {/* bill */}
           <div className="grid grid-cols-4 gap-4">
             <div className="pb-10">
               <div className="shadow-lg bg-sky-300 xl:p-6 p-4">

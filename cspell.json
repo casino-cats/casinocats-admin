@@ -22,7 +22,8 @@
     "signin",
     "xstate",
     "coinflip",
-    "Twotone"
+    "Twotone",
+    "peasy"
   ],
   "flagWords": []
 }
