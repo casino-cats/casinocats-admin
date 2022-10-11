@@ -17,7 +17,7 @@ export const userModel: UserModel = {
   isAdmin: computed((state) => {
     return state.user.role === "admin";
   }),
-  //   ACTIONS
+  // ACTIONS
   setUser: action((state, payload) => {
     state.user = payload;
   }),

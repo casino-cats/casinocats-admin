@@ -10,6 +10,8 @@ import WithdrawList from "../pages/transaction/WithdrawList";
 import RedemptionList from "../pages/RedemptionList";
 import User from "../pages/User";
 import AddPool from "../pages/AddPool";
+import Coinflip from "../pages/Coinflip";
+import Roulette from "../pages/Roulette";
 
 const Router = () => {
   return (
@@ -22,6 +24,8 @@ const Router = () => {
             <Route path="user" element={<User />} />
             <Route path="transaction/deposit" element={<DepositList />} />
             <Route path="transaction/withdraw" element={<WithdrawList />} />
+            <Route path="game/coinflip" element={<Coinflip />} />
+            <Route path="game/roulette" element={<Roulette />} />
             <Route path="redemption" element={<RedemptionList />} />
             <Route path="pool" element={<Pool />} />
             <Route path="pool/add" element={<AddPool />} />

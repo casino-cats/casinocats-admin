@@ -33,7 +33,6 @@ const Login = () => {
           signature: Buffer.from(signedMessage),
         });
         if (signResult.status === "success") {
-          // setUser({ authToken: signResult.data.accessToken });
           localStorage.setItem(
             LOCAL_STORAGE_KEY.AccessToken,
             signResult.data.accessToken

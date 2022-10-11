@@ -8,14 +8,24 @@ import {
   AiFillHeart,
   AiOutlineContainer,
 } from "react-icons/ai";
-import { FaUserAlt } from "react-icons/fa";
-import { BsCardList } from "react-icons/bs";
+import { FaUserAlt, FaGamepad } from "react-icons/fa";
+import { BsCardList, BsCoin, BsFillOctagonFill } from "react-icons/bs";
+import { RiLuggageDepositFill } from "react-icons/ri";
+import { IoCashOutline } from "react-icons/io5";
+import { useStoreState, useStoreActions } from "../store/hooks";
 
 const Sidebar = () => {
-  const location = useLocation();
-  const [isTransactionsDropdownShowing, setIsTransactionsDropdownShowing] =
-    useState(true);
-  const { pathname } = location;
+  // const location = useLocation();
+  // const { pathname } = location;
+  // const [isTransactionsDropdownShowing, setIsTransactionsDropdownShowing] =
+  //   useState(true);
+  const { sideBar } = useStoreState((store) => store.pageModel);
+  const { setIsGamesDropdownShowing } = useStoreActions(
+    (actions) => actions.pageModel
+  );
+  const { setIsTransactionsDropdownShowing } = useStoreActions(
+    (actions) => actions.pageModel
+  );
 
   return (
     <aside className="w-64 h-[calc(100vh-65px)]" aria-label="Sidebar">
@@ -47,26 +57,27 @@ const Sidebar = () => {
                 className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg w-full hover:bg-gray-700 transition duration-75 group"
                 onClick={() => {
                   setIsTransactionsDropdownShowing(
-                    !isTransactionsDropdownShowing
+                    !sideBar.isTransactionsDropdownShowing
                   );
                 }}
               >
                 <AiTwotoneMoneyCollect />
                 <span className="flex-1 ml-3 text-left">Transactions</span>
-                {isTransactionsDropdownShowing ? (
+                {sideBar.isTransactionsDropdownShowing ? (
                   <AiOutlineUp className="w-3 h-3" />
                 ) : (
                   <AiOutlineDown className="w-3 h-3" />
                 )}
               </button>
-              {isTransactionsDropdownShowing && (
-                <ul>
+              {sideBar.isTransactionsDropdownShowing && (
+                <ul className="pl-2">
                   <li>
                     <Link
                       to="/transaction/deposit"
                       className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
                     >
-                      Deposit
+                      <RiLuggageDepositFill />
+                      <span className="flex-1 ml-3 text-left">Deposit</span>
                     </Link>
                   </li>
                   <li>
@@ -74,7 +85,48 @@ const Sidebar = () => {
                       to="/transaction/withdraw"
                       className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
                     >
-                      Withdraw
+                      <IoCashOutline />
+                      <span className="flex-1 ml-3 text-left">Withdraw</span>
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+            {/* games */}
+            <li>
+              <button
+                type="button"
+                className="flex items-center p-2 text-base font-normal text-gray-50 rounded-lg w-full hover:bg-gray-700 transition duration-75 group"
+                onClick={() => {
+                  setIsGamesDropdownShowing(!sideBar.isGamesDropdownShowing);
+                }}
+              >
+                <FaGamepad />
+                <span className="flex-1 ml-3 text-left">Games</span>
+                {sideBar.isGamesDropdownShowing ? (
+                  <AiOutlineUp className="w-3 h-3" />
+                ) : (
+                  <AiOutlineDown className="w-3 h-3" />
+                )}
+              </button>
+              {sideBar.isGamesDropdownShowing && (
+                <ul className="pl-2">
+                  <li>
+                    <Link
+                      to="/game/coinflip"
+                      className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
+                    >
+                      <BsCoin />
+                      <span className="flex-1 ml-3 text-left">Coinflip</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/game/roulette"
+                      className="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-100 rounded-lg transition duration-75 group hover:bg-gray-700"
+                    >
+                      <BsFillOctagonFill />
+                      <span className="flex-1 ml-3 text-left">Roulette</span>
                     </Link>
                   </li>
                 </ul>
