@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import DateTimePicker from "react-datetime-picker";
 import { BN } from "@project-serum/anchor";
-import Header from "../partials/Header";
 import Sidebar from "../partials/Sidebar";
 import useClient from "../utils/hooks/useClient";
 
 const AddPool = () => {
   const client = useClient();
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [poolName, setPoolName] = useState("");
   const [depositStartDate, onDepositStartDateChange] = useState(new Date());
   const [depositEndDate, onDepositEndDateChange] = useState(new Date());
@@ -29,12 +27,9 @@ const AddPool = () => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Sidebar />
       {/* Content area */}
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-auto">
-        <Header />
-
+      <div className="relative flex flex-col flex-1 p-4 overflow-y-auto overflow-x-auto">
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="mb-4 sm:mb-0">

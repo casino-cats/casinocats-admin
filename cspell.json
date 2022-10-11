@@ -20,7 +20,10 @@
     "keypair",
     "accs",
     "signin",
-    "xstate"
+    "xstate",
+    "coinflip",
+    "Twotone",
+    "peasy"
   ],
   "flagWords": []
 }

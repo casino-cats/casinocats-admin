@@ -49,6 +49,46 @@ const createClient = ({
       console.log(txSig);
     },
 
+    withdrawSol: async ({ destination, amount }) => {
+      const txSig = await program.methods
+        .withdrawSol(new anchor.BN(amount * LAMPORTS_PER_SOL))
+        .accounts({
+          payer: (program.provider as anchor.AnchorProvider).wallet.publicKey,
+          destination: new PublicKey(destination),
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc();
+      return txSig;
+    },
+
+    withdrawUsdc: async ({ destination, amount }) => {
+      const usdcPubkey = new PublicKey(USDC_MINT_DEVNET);
+      const usdcSource = await findATA(
+        usdcPubkey,
+        (program.provider as anchor.AnchorProvider).wallet.publicKey
+      );
+      const usdcDestination = await findATA(
+        usdcPubkey,
+        new PublicKey(destination)
+      );
+
+      const txSig = await program.methods
+        .withdrawUsdc(new anchor.BN(amount * DECIMALS_PER_USDC))
+        .accounts({
+          usdcDestination: usdcDestination,
+          usdcSource: usdcSource,
+          usdcMint: new PublicKey(USDC_MINT_DEVNET),
+          owner: new PublicKey(destination),
+          payer: new PublicKey(CASINOCATS_HOUSE_WALLET),
+          tokenProgram: TOKEN_PROGRAM_ID,
+        })
+        .rpc();
+
+      console.log(txSig);
+
+      return txSig;
+    },
+
     createNftList: async ({ numberOfNfts, collectionName }) => {
       const nftListKey = Keypair.generate();
 

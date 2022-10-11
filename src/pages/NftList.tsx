@@ -7,7 +7,6 @@ import { NftListType } from "../utils/client/types/clientType";
 import useClient from "../utils/hooks/useClient";
 
 const NftList = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [collectionName, setCollectionName] = useState("");
@@ -74,11 +73,9 @@ const NftList = () => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Sidebar />
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-auto">
-        <Header />
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             <div className="mb-4 sm:mb-0">

@@ -29,6 +29,114 @@ export type CasinocatsProgram = {
       ];
     },
     {
+      name: "depositUsdc";
+      accounts: [
+        {
+          name: "usdcDestination";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcSource";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "owner";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "payer";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "amount";
+          type: "u64";
+        }
+      ];
+    },
+    {
+      name: "withdrawSol";
+      accounts: [
+        {
+          name: "payer";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "destination";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "amount";
+          type: "u64";
+        }
+      ];
+    },
+    {
+      name: "withdrawUsdc";
+      accounts: [
+        {
+          name: "usdcDestination";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcSource";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "usdcMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "owner";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "payer";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "amount";
+          type: "u64";
+        }
+      ];
+    },
+    {
       name: "createNftList";
       accounts: [
         {
@@ -587,6 +695,21 @@ export type CasinocatsProgram = {
           isSigner: false;
         },
         {
+          name: "cccRewardPot";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "cccRewardDestination";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "cccMint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
           name: "tokenProgram";
           isMut: false;
           isSigner: false;
@@ -614,6 +737,10 @@ export type CasinocatsProgram = {
         },
         {
           name: "bumpUsdcPot";
+          type: "u8";
+        },
+        {
+          name: "bumpCccPot";
           type: "u8";
         }
       ];
@@ -796,6 +923,114 @@ export const IDL: CasinocatsProgram = {
         },
         {
           name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "amount",
+          type: "u64",
+        },
+      ],
+    },
+    {
+      name: "depositUsdc",
+      accounts: [
+        {
+          name: "usdcDestination",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcSource",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "owner",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "payer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "amount",
+          type: "u64",
+        },
+      ],
+    },
+    {
+      name: "withdrawSol",
+      accounts: [
+        {
+          name: "payer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "destination",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "amount",
+          type: "u64",
+        },
+      ],
+    },
+    {
+      name: "withdrawUsdc",
+      accounts: [
+        {
+          name: "usdcDestination",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcSource",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "usdcMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "owner",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "payer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "tokenProgram",
           isMut: false,
           isSigner: false,
         },
@@ -1366,6 +1601,21 @@ export const IDL: CasinocatsProgram = {
           isSigner: false,
         },
         {
+          name: "cccRewardPot",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "cccRewardDestination",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "cccMint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
           name: "tokenProgram",
           isMut: false,
           isSigner: false,
@@ -1393,6 +1643,10 @@ export const IDL: CasinocatsProgram = {
         },
         {
           name: "bumpUsdcPot",
+          type: "u8",
+        },
+        {
+          name: "bumpCccPot",
           type: "u8",
         },
       ],
