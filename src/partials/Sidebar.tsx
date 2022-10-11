@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   AiFillDashboard,
@@ -15,10 +14,9 @@ import { IoCashOutline } from "react-icons/io5";
 import { useStoreState, useStoreActions } from "../store/hooks";
 
 const Sidebar = () => {
-  // const location = useLocation();
-  // const { pathname } = location;
-  // const [isTransactionsDropdownShowing, setIsTransactionsDropdownShowing] =
-  //   useState(true);
+  const location = useLocation();
+  const { pathname } = location;
+  console.log({ pathname });
   const { sideBar } = useStoreState((store) => store.pageModel);
   const { setIsGamesDropdownShowing } = useStoreActions(
     (actions) => actions.pageModel
